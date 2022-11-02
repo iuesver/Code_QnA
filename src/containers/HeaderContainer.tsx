@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import tw from 'tailwind-styled-components';
 
 const Nav = tw.nav`
@@ -16,7 +17,9 @@ export const HeaderContainer = () => {
   return (
     <Nav>
       <Title>
-        <h1 className="font-bold text-xl">Code Q&A</h1>
+        <Link to={'/'}>
+          <h1 className="font-bold text-xl">Code Q&A</h1>
+        </Link>
       </Title>
       <div className="flex-none">
         <label htmlFor="login-modal" className="btn btn-primary text-lg">
