@@ -22,7 +22,10 @@ export const HeaderContainer = () => {
         </Link>
       </Title>
       <div className="flex-none">
-        <label htmlFor="login-modal" className="btn btn-primary text-lg">
+        <label
+          htmlFor="login-modal"
+          className="btn btn-primary text-md text-white"
+        >
           login
         </label>
         <input type="checkbox" id="login-modal" className="modal-toggle" />

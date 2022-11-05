@@ -1,9 +1,10 @@
 import colorSyntax from '@toast-ui/editor-plugin-color-syntax';
 import '@toast-ui/editor/dist/i18n/ko-kr';
 import { Editor } from '@toast-ui/react-editor';
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 
 export const TextEditor = () => {
+  const editorRef = useRef(null);
   useEffect(() => {
     import('@toast-ui/editor/dist/toastui-editor.css');
   }, []);
@@ -16,6 +17,7 @@ export const TextEditor = () => {
       language="ko-KR"
       plugins={[colorSyntax]}
       useCommandShortcut={true}
+      ref={editorRef}
     />
   );
 };
