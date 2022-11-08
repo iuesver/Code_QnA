@@ -3,7 +3,13 @@ import '@toast-ui/editor/dist/i18n/ko-kr';
 import { Editor } from '@toast-ui/react-editor';
 import { useEffect, useRef } from 'react';
 
-export const TextEditor = () => {
+export const TextEditor = ({
+  info,
+  setFunc,
+}: {
+  info: any;
+  setFunc: Function;
+}) => {
   const editorRef = useRef(null);
   useEffect(() => {
     import('@toast-ui/editor/dist/toastui-editor.css');
@@ -18,6 +24,13 @@ export const TextEditor = () => {
       plugins={[colorSyntax]}
       useCommandShortcut={true}
       ref={editorRef}
+      onChange={() => {
+        const value = editorRef.current.getInstance().getHTML();
+        setFunc({
+          ...info,
+          ['content']: value,
+        });
+      }}
     />
   );
 };

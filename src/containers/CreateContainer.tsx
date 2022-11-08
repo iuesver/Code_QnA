@@ -1,6 +1,8 @@
 import { useNavigate } from 'react-router-dom';
 import { TextEditor } from '../editors/TextEditor';
 import tw from 'tailwind-styled-components';
+import { useEffect, useState } from 'react';
+import { post } from '../redux/readPostSlice';
 
 const BtnDiv = tw.div`
 flex justify-end p-2
@@ -22,15 +24,38 @@ const DeleteModal = tw.label`
 btn btn-sm btn-error rounded-full m-0.5 text-white
 `;
 
-const TitleInput = tw.input`
+const TextInput = tw.input`
 input input-bordered
 `;
 
 export const CreateContainer = () => {
   const navigate = useNavigate();
+  const [info, setInfo] = useState<post>({
+    title: '',
+    category: '',
+    content: '',
+    desc: '',
+    author: '',
+    id: 0,
+    date: new Date().toLocaleDateString(),
+    like: 0,
+  });
+  const { title, category, content, desc, author } = info;
+  const onChange = (
+    event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => {
+    const { name, value }: { name: string; value: string } = event.target;
+    setInfo({
+      ...info,
+      [name]: value,
+    });
+  };
+  useEffect(() => {
+    console.log(info);
+  }, [info]);
   return (
     <>
-      <TextEditor />
+      <TextEditor info={info} setFunc={setInfo} />
       <BtnDiv>
         <AddBtn htmlFor="add-modal">작성하기</AddBtn>
         <input type="checkbox" id="add-modal" className="modal-toggle" />
@@ -40,7 +65,41 @@ export const CreateContainer = () => {
               <label htmlFor="title" className="label">
                 <span>글 제목을 정해주세요</span>
               </label>
-              <TitleInput type="text" name="title" id="title" required />
+              <TextInput
+                type="text"
+                name="title"
+                id="title"
+                onChange={onChange}
+                value={title}
+                required
+              />
+              <label htmlFor="desc" className="label">
+                <span>추가설명을 적어주세요</span>
+              </label>
+              <TextInput
+                type="text"
+                name="desc"
+                id="desc"
+                onChange={onChange}
+                value={desc}
+                required
+              />
+              <select
+                className="select select-bordered mt-4"
+                name="category"
+                id="category"
+                onChange={onChange}
+                value={category}
+              >
+                <option value="전체" selected>
+                  카테고리를 정해주세요
+                </option>
+                <option value="자바스크립트">자바스크립트</option>
+                <option value="타입스크립트">타입스크립트</option>
+                <option value="리액트">리액트</option>
+                <option value="뷰">뷰</option>
+                <option value="앵귤러">앵귤러</option>
+              </select>
             </div>
             <div className="modal-action">
               <AddModal type="submit" value="등록하기" />

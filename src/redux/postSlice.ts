@@ -3,7 +3,9 @@ import { readPost } from '../firebase/function';
 
 export interface post {
   title: string;
+  category: string;
   content: string;
+  desc: string;
   author: string;
   id: number;
   date: string;
@@ -22,12 +24,12 @@ const initialState: postInit = {
   loading: false,
 };
 
-export const readPostSlice = createSlice({
-  name: 'readPost',
+export const postSlice = createSlice({
+  name: 'post',
   initialState,
   reducers: {},
   extraReducers: (builder) => {
-    builder.addCase(readPost.pending, (state, action) => {
+    builder.addCase(readPost.pending, (state) => {
       state.loading = true;
     });
     builder.addCase(readPost.fulfilled, (state, action) => {

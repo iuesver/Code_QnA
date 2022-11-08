@@ -1,5 +1,9 @@
+import React, { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { register, logIn, logOut } from '../firebase/auth';
 import tw from 'tailwind-styled-components';
+import { auth } from '../firebase/app';
 
 const Nav = tw.nav`
 navbar bg-primary text-white
@@ -14,6 +18,27 @@ text-black input input-bordered input-sm input-primary w-full
 `;
 
 export const HeaderContainer = () => {
+  const [signIn, setSignIn] = useState(false);
+  const [signUp, setSignUp] = useState(false);
+  const [signUpInfo, setSignUpInfo] = useState({ email: '', password: '' });
+  const dispatch = useDispatch();
+  const { email, password } = signUpInfo;
+  const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = event.target;
+    setSignUpInfo({
+      ...signUpInfo,
+      [name]: value,
+    });
+  };
+  useEffect(() => {
+    auth.onAuthStateChanged((user) => {
+      if (user) {
+        setSignIn(true);
+      } else {
+        setSignIn(false);
+      }
+    });
+  }, []);
   return (
     <Nav>
       <Title>
@@ -22,42 +47,125 @@ export const HeaderContainer = () => {
         </Link>
       </Title>
       <div className="flex-none">
-        <label
-          htmlFor="login-modal"
-          className="btn btn-primary text-md text-white"
-        >
-          login
-        </label>
-        <input type="checkbox" id="login-modal" className="modal-toggle" />
-        <div className="modal">
-          <div className="modal-box">
-            <label htmlFor="user-email" className="label">
-              <span className="label-text">E-Mail</span>
+        {!signIn ? (
+          <>
+            <label
+              htmlFor="login-modal"
+              className="btn btn-primary text-md text-white rounded-full"
+            >
+              login
             </label>
-            <TextInput type="mail" name="user-email" id="user-email" />
-            <label htmlFor="user-password" className="label">
-              <span className="label-text">Password</span>
-            </label>
-            <TextInput
-              type="password"
-              name="user-password"
-              id="user-password"
-            />
-            <div className="modal-action">
-              <a href="/" className="link link-primary flex-1 mt-6">
-                아직 회원이 아니신가요?
-              </a>
-              <input
-                type="submit"
-                value="로그인"
-                className="btn btn-primary px-5"
-              />
-              <label htmlFor="login-modal" className="btn btn-primary px-6">
-                취소
+            <input type="checkbox" id="login-modal" className="modal-toggle" />
+          </>
+        ) : (
+          <>
+            <button
+              onClick={() => {
+                dispatch(logOut());
+                setSignIn(false);
+              }}
+              className="btn btn-primary text-md text-white rounded-full"
+            >
+              logout
+            </button>
+          </>
+        )}
+        {signUp ? (
+          <div className="modal">
+            <div className="modal-box">
+              <label htmlFor="user-email" className="label">
+                <span className="label-text">이메일</span>
               </label>
+              <TextInput
+                type="mail"
+                name="email"
+                id="user-email"
+                onChange={onChange}
+                value={email}
+                required
+              />
+              <label htmlFor="user-password" className="label">
+                <span className="label-text">비밀번호</span>
+              </label>
+              <TextInput
+                type="password"
+                name="password"
+                id="user-password"
+                onChange={onChange}
+                value={password}
+                required
+              />
+              <div className="modal-action">
+                <input
+                  type="submit"
+                  value="가입하기"
+                  className="btn btn-primary rounded-full px-5"
+                  onClick={() => {
+                    dispatch(register(signUpInfo));
+                  }}
+                />
+                <label
+                  htmlFor="login-modal"
+                  className="btn btn-primary rounded-full px-6"
+                  onClick={() => setSignUp(!signUp)}
+                >
+                  취소
+                </label>
+              </div>
             </div>
           </div>
-        </div>
+        ) : (
+          <div className="modal">
+            <div className="modal-box">
+              <label htmlFor="user-email" className="label">
+                <span className="label-text">이메일</span>
+              </label>
+              <TextInput
+                type="mail"
+                name="email"
+                id="user-email"
+                onChange={onChange}
+                value={email}
+                required
+              />
+              <label htmlFor="user-password" className="label">
+                <span className="label-text">비밀번호</span>
+              </label>
+              <TextInput
+                type="password"
+                name="password"
+                id="user-password"
+                onChange={onChange}
+                value={password}
+                required
+              />
+              <div className="modal-action">
+                <a
+                  onClick={(event) => {
+                    event.preventDefault();
+                    setSignUp(!signUp);
+                  }}
+                  href="/"
+                  className="link link-primary flex-1 mt-6"
+                >
+                  아직 회원이 아니신가요?
+                </a>
+                <input
+                  type="submit"
+                  value="로그인"
+                  className="btn btn-primary rounded-full px-5"
+                  onClick={() => dispatch(logIn(signUpInfo))}
+                />
+                <label
+                  htmlFor="login-modal"
+                  className="btn btn-primary rounded-full px-6"
+                >
+                  취소
+                </label>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     </Nav>
   );

@@ -11,18 +11,21 @@ flex justify-evenly h-screen p-4
 `;
 
 export const MainContainer = () => {
-  const post = useSelector((state: any) => {
-    return state.read.data;
+  const posts = useSelector((state: any) => {
+    return state.post.data;
   });
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(readPost());
-    console.log(post);
+    console.log(posts);
   }, [dispatch]);
+  if (!posts) {
+    return <h1>loading...</h1>;
+  }
   return (
     <Section>
       <Menu />
-      <MainPost />
+      <MainPost posts={posts} />
       <SideBar />
     </Section>
   );

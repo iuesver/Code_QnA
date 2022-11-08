@@ -36,7 +36,7 @@ export const createPost = createAsyncThunk(
   }
 );
 
-export const readPost = createAsyncThunk('readPost/readPost', async () => {
+export const readPost = createAsyncThunk('post', async () => {
   const db = await doc(firestore, 'data', 'posts');
   try {
     const response = await getDoc(db);

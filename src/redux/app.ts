@@ -1,11 +1,13 @@
 import { configureStore } from '@reduxjs/toolkit';
 import thunk from 'redux-thunk';
 import { firestore } from '../firebase/app';
-import { readPostSlice } from './readPostSlice';
+import { postSlice } from './postSlice';
+import { userSlice } from './userSlice';
 
 const store = configureStore({
   reducer: {
-    read: readPostSlice.reducer,
+    post: postSlice.reducer,
+    user: userSlice.reducer,
   },
   middleware: [thunk.withExtraArgument(firestore)],
 });
