@@ -22,22 +22,26 @@ export const ProductViewer = ({
   posts,
   params,
 }: {
-  posts: any;
+  posts: post[];
   params: Readonly<Params<string>>;
 }) => {
-  const post: post = posts.find(
-    (item: post) => item.id.toString() === params.id
+  const post: post | undefined = posts.find(
+    (item: post) => item.id === Number(params.id)
   );
   return (
     <Article>
-      <Info>
-        <Title>{post.title}</Title>
-        <div className="flex py-2">
-          <SubContent className="flex-1">작성일 : {post.date}</SubContent>
-          <SubContent>작성자 : {post.author}</SubContent>
-        </div>
-      </Info>
-      <Viewer initialValue={post.content} />
+      {post && (
+        <>
+          <Info>
+            <Title>{post.title}</Title>
+            <div className="flex py-2">
+              <SubContent className="flex-1">작성일 : {post.date}</SubContent>
+              <SubContent>작성자 : {post.author}</SubContent>
+            </div>
+          </Info>
+          <Viewer initialValue={post.content} />
+        </>
+      )}
     </Article>
   );
 };

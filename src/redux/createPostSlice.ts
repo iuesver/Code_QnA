@@ -1,5 +1,5 @@
 import { createSlice, SerializedError } from '@reduxjs/toolkit';
-import { readPost } from '../firebase/function';
+import { createPost } from '../firebase/function';
 
 export interface post {
   title: string;
@@ -13,7 +13,7 @@ export interface post {
 }
 
 export interface postInit {
-  data: post[] | null;
+  data: post | post[] | null;
   error: SerializedError | null;
   loading: boolean;
 }
@@ -24,19 +24,19 @@ const initialState: postInit = {
   loading: false,
 };
 
-export const postSlice = createSlice({
-  name: 'post',
+export const createPostSlice = createSlice({
+  name: 'createPost',
   initialState,
   reducers: {},
   extraReducers: (builder) => {
-    builder.addCase(readPost.pending, (state) => {
+    builder.addCase(createPost.pending, (state, action) => {
       state.loading = true;
     });
-    builder.addCase(readPost.fulfilled, (state, action) => {
+    builder.addCase(createPost.fulfilled, (state, action) => {
       state.data = action.payload;
       state.loading = false;
     });
-    builder.addCase(readPost.rejected, (state, action) => {
+    builder.addCase(createPost.rejected, (state, action) => {
       state.error = action.error;
       state.loading = false;
     });

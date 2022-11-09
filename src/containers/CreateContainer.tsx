@@ -2,7 +2,10 @@ import { useNavigate } from 'react-router-dom';
 import { TextEditor } from '../editors/TextEditor';
 import tw from 'tailwind-styled-components';
 import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { createPost, readPost } from '../firebase/function';
 import { post } from '../redux/readPostSlice';
+import { auth } from '../firebase/app';
 
 const BtnDiv = tw.div`
 flex justify-end p-2
@@ -30,13 +33,17 @@ input input-bordered
 
 export const CreateContainer = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const posts: post[] = useSelector((state: any) => {
+    return state.readPost.data;
+  });
   const [info, setInfo] = useState<post>({
     title: '',
     category: '',
     content: '',
     desc: '',
     author: '',
-    id: 0,
+    id: posts?.length,
     date: new Date().toLocaleDateString(),
     like: 0,
   });
@@ -51,8 +58,19 @@ export const CreateContainer = () => {
     });
   };
   useEffect(() => {
-    console.log(info);
-  }, [info]);
+    dispatch(readPost());
+    auth.onAuthStateChanged((user) => {
+      if (user && user.email !== null) {
+        setInfo({
+          ...info,
+          ['author']: user.email,
+        });
+      } else {
+        navigate('/');
+      }
+    });
+    console.log(info.id);
+  }, [dispatch]);
   return (
     <>
       <TextEditor info={info} setFunc={setInfo} />
@@ -91,9 +109,7 @@ export const CreateContainer = () => {
                 onChange={onChange}
                 value={category}
               >
-                <option value="전체" selected>
-                  카테고리를 정해주세요
-                </option>
+                <option value="전체">카테고리를 정해주세요</option>
                 <option value="자바스크립트">자바스크립트</option>
                 <option value="타입스크립트">타입스크립트</option>
                 <option value="리액트">리액트</option>
@@ -102,7 +118,14 @@ export const CreateContainer = () => {
               </select>
             </div>
             <div className="modal-action">
-              <AddModal type="submit" value="등록하기" />
+              <AddModal
+                type="submit"
+                value="등록하기"
+                onClick={() => {
+                  dispatch(createPost(info));
+                  navigate('/');
+                }}
+              />
               <DeleteModal htmlFor="add-modal">취소하기</DeleteModal>
             </div>
           </div>

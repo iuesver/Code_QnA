@@ -1,15 +1,19 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { Viewer } from '@toast-ui/react-editor';
 import '@toast-ui/editor/dist/toastui-editor-viewer.css';
-import { useEffect } from 'react';
-import { readPost } from '../firebase/function';
+import { useEffect, useState } from 'react';
+import { readComment, readPost, plusLike } from '../firebase/function';
 import tw from 'tailwind-styled-components';
 import { useParams } from 'react-router-dom';
 import { post } from '../redux/readPostSlice';
+import { createComment } from '../firebase/function';
 import { ProductViewer } from '../product/ProductViewer';
+import { HandThumbUpIcon } from '@heroicons/react/24/solid';
+import { comment } from '../redux/createCommentSlice';
+import { getAuth } from 'firebase/auth';
+import { LoadingContainer } from './LoadingContainer';
 
 const Section = tw.section`
-flex flex-col w-3/4 h-screen mx-auto my-2 rounded shadow-lg
+flex flex-col w-3/4 h-full min-h-screen mx-auto my-2 rounded shadow-lg
 `;
 
 const Article = tw.article`
@@ -28,26 +32,53 @@ text-gray-400
 `;
 
 export const ProductContainer = () => {
-  let params = useParams();
+  const params = useParams();
+  const [commentInfo, setCommentInfo] = useState('');
   const posts: post[] = useSelector((state: any) => {
-    return state.read.data;
+    return state.readPost.data;
   });
+  const comments: comment[] = useSelector((state: any) => {
+    return state.readComment.data;
+  });
+  const currentComments: comment[] | null =
+    comments !== null
+      ? comments.filter(
+          (comment: comment) => comment.group === Number(params.id)
+        )
+      : null;
   const dispatch = useDispatch();
+  const auth = getAuth().currentUser;
+  const user = auth !== null ? auth.email : null;
+  const post = posts.find((item: post) => item.id === Number(params.id));
   useEffect(() => {
     dispatch(readPost());
+    dispatch(readComment());
   }, [dispatch]);
-  if (!posts) {
-    return <h1>loading...</h1>;
+  if (!posts || !comments) {
+    return <LoadingContainer />;
   }
   return (
     <Section>
       <ProductViewer posts={posts} params={params} />
+      <div className="flex justify-center">
+        <button
+          onClick={() => dispatch(plusLike(post))}
+          className="btn gap-2 bg-white text-black hover:text-white rounded-full"
+        >
+          <HandThumbUpIcon className="w-6 h-6 text-blue-500" />
+          좋아요
+        </button>
+      </div>
       <Article>
         <div className="p-2">
           <span className="text-bold text-lg">댓글</span>
           <span className="text-sm text-gray-400">
             {' '}
-            총 <span className="text-accent">{1}</span>개
+            총{' '}
+            <span className="text-accent">
+              {currentComments === null ? 0 : currentComments.length}
+            </span>
+            개
           </span>
         </div>
         <div className="form-control">
@@ -56,11 +87,37 @@ export const ProductContainer = () => {
               type="text"
               placeholder="댓글을 작성해주세요..."
               className="input input-bordered w-full"
+              onChange={(event) => {
+                setCommentInfo(event.target.value);
+              }}
             />
-            <button className="w-20 btn btn-square btn-primary text-white">
+            <button
+              onClick={() =>
+                dispatch(
+                  createComment({
+                    comment: commentInfo,
+                    commenter: user || 'unknown',
+                    group: Number(params.id),
+                    id: comments.length + 1,
+                  })
+                )
+              }
+              className="w-20 btn btn-square btn-primary text-white"
+            >
               작성하기
             </button>
           </div>
+        </div>
+        <div>
+          {currentComments &&
+            currentComments.map((comment: comment) => (
+              <div key={comment.id} className="p-2 border-b-2">
+                <p>{comment.comment}</p>
+                <span className="text-sm text-gray-500">
+                  {comment.commenter}
+                </span>
+              </div>
+            ))}
         </div>
       </Article>
     </Section>

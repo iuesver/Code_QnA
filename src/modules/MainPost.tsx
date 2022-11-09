@@ -1,6 +1,9 @@
 import { Link } from 'react-router-dom';
-import { HeartIcon } from '@heroicons/react/24/solid';
+import { ChevronUpIcon, ChevronDownIcon } from '@heroicons/react/24/solid';
 import tw from 'tailwind-styled-components';
+import { post } from '../redux/readPostSlice';
+import { comment } from '../redux/createCommentSlice';
+import { useEffect } from 'react';
 
 const Article = tw.article`
 flex flex-col w-1/2 shadow-lg
@@ -22,7 +25,20 @@ const LikeDiv = tw.div`
 flex flex-col justify-center items-center w-16
 `;
 
-export const MainPost = ({ posts }: any) => {
+export const MainPost = ({
+  posts,
+  comments,
+}: {
+  posts: post[];
+  comments: comment[];
+}) => {
+  const commentsNum = comments.reduce(
+    (acc: any, cur: comment) => ({
+      ...acc,
+      [cur.group]: (acc[cur.group] || 0) + 1,
+    }),
+    {}
+  );
   return (
     <Article>
       <div>
@@ -41,22 +57,29 @@ export const MainPost = ({ posts }: any) => {
         </BtnDiv>
       </div>
       <div>
-        {posts.map((post: any) => (
-          <div className="p-4" key={post.id}>
-            <div className="flex p-2 border-b-2">
-              <LikeDiv>
-                <HeartIcon className="inline-block w-8 h-8 text-error" />
-                <span>{post.like}</span>
-              </LikeDiv>
-              <div>
-                <Link to={`/${post.id}`}>
-                  <h1 className="text-2xl text-bold">{post.title}</h1>
-                </Link>
-                <p className="mt-2 text-gray-500">{post.desc}</p>
+        {posts &&
+          posts.map((post: post) => (
+            <div className="px-4" key={post.id}>
+              <div className="flex py-2 border-b-2">
+                <LikeDiv>
+                  <ChevronUpIcon className="inline-block w-6 h-6" />
+                  <span className="font-semibold">{post.like}</span>
+                  <ChevronDownIcon className="inline-block w-6 h-6" />
+                </LikeDiv>
+                <div>
+                  <Link to={`/${post.id}`}>
+                    <h1 className="text-lg font-semibold">
+                      {post.title}
+                      <span className="text-sm text-accent px-1">
+                        [{commentsNum[post.id] || 0}]
+                      </span>
+                    </h1>
+                  </Link>
+                  <p className="mt-2 text-gray-500">{post.desc}</p>
+                </div>
               </div>
             </div>
-          </div>
-        ))}
+          ))}
       </div>
     </Article>
   );

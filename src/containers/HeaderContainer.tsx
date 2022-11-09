@@ -99,14 +99,14 @@ export const HeaderContainer = () => {
                 <input
                   type="submit"
                   value="가입하기"
-                  className="btn btn-primary rounded-full px-5"
+                  className="btn btn-primary rounded-full w-20 px-5"
                   onClick={() => {
                     dispatch(register(signUpInfo));
                   }}
                 />
                 <label
                   htmlFor="login-modal"
-                  className="btn btn-primary rounded-full px-6"
+                  className="btn btn-primary rounded-full w-20 px-5"
                   onClick={() => setSignUp(!signUp)}
                 >
                   취소
@@ -139,29 +139,31 @@ export const HeaderContainer = () => {
                 value={password}
                 required
               />
-              <div className="modal-action">
+              <div className="modal-action flex justify-between">
                 <a
                   onClick={(event) => {
                     event.preventDefault();
                     setSignUp(!signUp);
                   }}
                   href="/"
-                  className="link link-primary flex-1 mt-6"
+                  className="link link-primary mt-6"
                 >
                   아직 회원이 아니신가요?
                 </a>
-                <input
-                  type="submit"
-                  value="로그인"
-                  className="btn btn-primary rounded-full px-5"
-                  onClick={() => dispatch(logIn(signUpInfo))}
-                />
-                <label
-                  htmlFor="login-modal"
-                  className="btn btn-primary rounded-full px-6"
-                >
-                  취소
-                </label>
+                <div>
+                  <input
+                    type="submit"
+                    value="로그인"
+                    className="btn btn-primary rounded-full w-20 px-5 mr-2"
+                    onClick={() => dispatch(logIn(signUpInfo))}
+                  />
+                  <label
+                    htmlFor="login-modal"
+                    className="btn btn-primary rounded-full w-20 px-5"
+                  >
+                    취소
+                  </label>
+                </div>
               </div>
             </div>
           </div>
