@@ -4,11 +4,11 @@ import { useEffect, useState } from 'react';
 import { readComment, readPost, plusLike } from '../firebase/function';
 import tw from 'tailwind-styled-components';
 import { useParams } from 'react-router-dom';
-import { post } from '../redux/readPostSlice';
+import { post } from '../redux/postSlice';
 import { createComment } from '../firebase/function';
 import { ProductViewer } from '../product/ProductViewer';
 import { HandThumbUpIcon } from '@heroicons/react/24/solid';
-import { comment } from '../redux/createCommentSlice';
+import { comment } from '../redux/commentSlice';
 import { getAuth } from 'firebase/auth';
 import { LoadingContainer } from './LoadingContainer';
 
@@ -35,10 +35,10 @@ export const ProductContainer = () => {
   const params = useParams();
   const [commentInfo, setCommentInfo] = useState('');
   const posts: post[] = useSelector((state: any) => {
-    return state.readPost.data;
+    return state.post.data;
   });
   const comments: comment[] = useSelector((state: any) => {
-    return state.readComment.data;
+    return state.comment.data;
   });
   const currentComments: comment[] | null =
     comments !== null
@@ -54,15 +54,19 @@ export const ProductContainer = () => {
     dispatch(readPost());
     dispatch(readComment());
   }, [dispatch]);
-  if (!posts || !comments) {
+  if (!posts || !comments || !post) {
     return <LoadingContainer />;
   }
   return (
     <Section>
-      <ProductViewer posts={posts} params={params} />
+      <ProductViewer posts={posts} params={params} user={user} />
       <div className="flex justify-center">
         <button
-          onClick={() => dispatch(plusLike(post))}
+          onClick={() => {
+            if (post) {
+              dispatch(plusLike(post));
+            }
+          }}
           className="btn gap-2 bg-white text-black hover:text-white rounded-full"
         >
           <HandThumbUpIcon className="w-6 h-6 text-blue-500" />

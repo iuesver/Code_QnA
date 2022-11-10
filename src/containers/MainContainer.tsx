@@ -6,17 +6,19 @@ import { readComment, readPost } from '../firebase/function';
 import { useSelector, useDispatch } from 'react-redux';
 import { useEffect } from 'react';
 import { LoadingContainer } from './LoadingContainer';
+import { post } from '../redux/postSlice';
+import { comment } from '../redux/commentSlice';
 
 const Section = tw.section`
 flex justify-evenly min-h-screen p-4
 `;
 
 export const MainContainer = () => {
-  const posts = useSelector((state: any) => {
-    return state.readPost.data;
+  const posts: post[] = useSelector((state: any) => {
+    return state.post.data;
   });
-  const comments = useSelector((state: any) => {
-    return state.readComment.data;
+  const comments: comment[] = useSelector((state: any) => {
+    return state.comment.data;
   });
   const dispatch = useDispatch();
   useEffect(() => {
@@ -30,7 +32,7 @@ export const MainContainer = () => {
     <Section>
       <Menu />
       <MainPost posts={posts} comments={comments} />
-      <SideBar />
+      <SideBar posts={posts} />
     </Section>
   );
 };

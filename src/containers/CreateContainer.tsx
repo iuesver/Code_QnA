@@ -4,7 +4,7 @@ import tw from 'tailwind-styled-components';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { createPost, readPost } from '../firebase/function';
-import { post } from '../redux/readPostSlice';
+import { post } from '../redux/postSlice';
 import { auth } from '../firebase/app';
 
 const BtnDiv = tw.div`
@@ -35,7 +35,7 @@ export const CreateContainer = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const posts: post[] = useSelector((state: any) => {
-    return state.readPost.data;
+    return state.post.data;
   });
   const [info, setInfo] = useState<post>({
     title: '',
@@ -69,7 +69,6 @@ export const CreateContainer = () => {
         navigate('/');
       }
     });
-    console.log(info.id);
   }, [dispatch]);
   return (
     <>

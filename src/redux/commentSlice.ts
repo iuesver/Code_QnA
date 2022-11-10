@@ -1,5 +1,5 @@
 import { createSlice, SerializedError } from '@reduxjs/toolkit';
-import { readComment } from '../firebase/function';
+import { createComment, readComment } from '../firebase/function';
 
 export interface comment {
   comment: string;
@@ -20,11 +20,22 @@ const initialState: commentInit = {
   loading: false,
 };
 
-export const readCommentSlice = createSlice({
-  name: 'readComment',
+export const commentSlice = createSlice({
+  name: 'comment',
   initialState,
   reducers: {},
   extraReducers: (builder) => {
+    builder.addCase(createComment.pending, (state, action) => {
+      state.loading = true;
+    });
+    builder.addCase(createComment.fulfilled, (state, action) => {
+      state.data = action.payload;
+      state.loading = false;
+    });
+    builder.addCase(createComment.rejected, (state, action) => {
+      state.error = action.error;
+      state.loading = false;
+    });
     builder.addCase(readComment.pending, (state, action) => {
       state.loading = true;
     });

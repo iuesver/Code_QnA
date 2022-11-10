@@ -63,6 +63,7 @@ export const HeaderContainer = () => {
               onClick={() => {
                 dispatch(logOut());
                 setSignIn(false);
+                window.location.reload();
               }}
               className="btn btn-primary text-md text-white rounded-full"
             >
@@ -155,7 +156,10 @@ export const HeaderContainer = () => {
                     type="submit"
                     value="로그인"
                     className="btn btn-primary rounded-full w-20 px-5 mr-2"
-                    onClick={() => dispatch(logIn(signUpInfo))}
+                    onClick={() => {
+                      dispatch(logIn(signUpInfo));
+                      window.location.reload();
+                    }}
                   />
                   <label
                     htmlFor="login-modal"

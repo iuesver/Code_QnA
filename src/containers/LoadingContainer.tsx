@@ -7,7 +7,7 @@ flex justify-center items-center min-h-screen
 
 export const LoadingContainer = () => {
   return (
-    <Section className="flex items-center">
+    <Section>
       <Bars
         width="80"
         height="80"

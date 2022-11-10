@@ -1,9 +1,8 @@
 import { Link } from 'react-router-dom';
 import { ChevronUpIcon, ChevronDownIcon } from '@heroicons/react/24/solid';
 import tw from 'tailwind-styled-components';
-import { post } from '../redux/readPostSlice';
-import { comment } from '../redux/createCommentSlice';
-import { useEffect } from 'react';
+import { post } from '../redux/postSlice';
+import { comment } from '../redux/commentSlice';
 
 const Article = tw.article`
 flex flex-col w-1/2 shadow-lg

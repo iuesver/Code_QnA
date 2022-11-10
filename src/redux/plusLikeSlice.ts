@@ -1,9 +1,9 @@
 import { createSlice, SerializedError } from '@reduxjs/toolkit';
 import { plusLike } from '../firebase/function';
-import { post } from './createPostSlice';
+import { post } from './postSlice';
 
 interface initialStateInit {
-  data: post | null;
+  data: number | null;
   error: SerializedError | null;
   loading: boolean;
 }

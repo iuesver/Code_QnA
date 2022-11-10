@@ -5,8 +5,10 @@ import {
   doc,
   getDoc,
   updateDoc,
+  increment,
 } from 'firebase/firestore';
-import { post } from '../redux/readPostSlice';
+import { comment } from '../redux/commentSlice';
+import { post } from '../redux/postSlice';
 import { firestore } from './app';
 
 export const createPost = createAsyncThunk(
@@ -84,24 +86,25 @@ export const updatePost = createAsyncThunk(
   }
 );
 
-export const deletePost = createAsyncThunk(
-  'deletePost',
-  async ({ id }: { id: number }) => {
-    const db = doc(firestore, 'data', 'posts');
-    try {
-      const response = await getDoc(db);
-      if (response.exists()) {
-        let products = response.data().post;
-        let product = products.find((item: post) => item.id == id);
-        await updateDoc(db, {
-          post: arrayRemove(product),
-        });
-      }
-    } catch (error) {
-      console.error(error);
+export const deletePost = createAsyncThunk('deletePost', async (id: number) => {
+  const db = doc(firestore, 'data', 'posts');
+  try {
+    const response = await getDoc(db);
+    if (response.exists()) {
+      let products = response.data().post;
+      let product = products.find((item: post) => item.id == id);
+      await updateDoc(db, {
+        post: arrayRemove(product),
+      });
     }
+    if (response.exists()) {
+      let posts = response.data().post;
+      return posts;
+    }
+  } catch (error) {
+    console.error(error);
   }
-);
+});
 export const readComment = createAsyncThunk('readComment', async () => {
   const db = doc(firestore, 'data', 'comments');
   try {
@@ -140,13 +143,13 @@ export const createComment = createAsyncThunk(
 
 export const updateComment = createAsyncThunk(
   'updateComment',
-  async ({ data, desc }: { data: any; desc: string }) => {
+  async ({ data, desc }: { data: comment; desc: string }) => {
     const db = doc(firestore, 'data', 'comments');
     try {
       const response = await getDoc(db);
       if (response.exists()) {
         let posts = response.data().comment;
-        let post = posts.find((item: any) => item.id === data.id);
+        let post = posts.find((item: comment) => item.id === data.id);
         await updateDoc(db, {
           comment: arrayRemove(post),
         });
@@ -173,7 +176,7 @@ export const updateComment = createAsyncThunk(
 
 export const deleteComment = createAsyncThunk(
   'deleteComment',
-  async ({ data }: { data: any }) => {
+  async ({ data }: { data: comment }) => {
     const db = doc(firestore, 'data', 'comments');
     try {
       await updateDoc(db, {
@@ -192,27 +195,26 @@ export const deleteComment = createAsyncThunk(
 
 export const plusLike = createAsyncThunk(
   'plusLike',
-  async ({ item }: { item: post }) => {
+  async ({ post }: { post: post }) => {
     const db = await doc(firestore, 'data', 'posts');
     try {
       const response = await getDoc(db);
       if (response.exists()) {
-        let products = response.data().post;
-        let product = products.find((product: post) => product.id === item.id);
+        let products: post[] = response.data().post;
+        let product = products.find((item: post) => item.id === post.id);
         await updateDoc(db, {
           post: arrayRemove(product),
         });
       }
       await updateDoc(db, {
-        post: arrayUnion({
-          title: item.title,
-          category: item.category,
-          content: item.content,
-          desc: item.desc,
-          author: item.author,
-          id: item.id,
-          date: item.date,
-          like: item.like + 1,
+        post: arrayUnion(db, {
+          author: post.author,
+          content: post.content,
+          date: post.date,
+          desc: post.desc,
+          id: post.id,
+          title: post.title,
+          like: post.like + 1,
         }),
       });
       const result = await getDoc(db);
