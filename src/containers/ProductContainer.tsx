@@ -1,4 +1,4 @@
-import { useDispatch, useSelector } from 'react-redux';
+import { useAppDispatch, useAppSelector } from '../redux/app';
 import '@toast-ui/editor/dist/toastui-editor-viewer.css';
 import { useEffect, useState } from 'react';
 import { readComment, readPost, plusLike } from '../firebase/function';
@@ -34,10 +34,10 @@ text-gray-400
 export const ProductContainer = () => {
   const params = useParams();
   const [commentInfo, setCommentInfo] = useState('');
-  const posts: post[] = useSelector((state: any) => {
+  const posts: post[] = useAppSelector((state: any) => {
     return state.post.data;
   });
-  const comments: comment[] = useSelector((state: any) => {
+  const comments: comment[] = useAppSelector((state: any) => {
     return state.comment.data;
   });
   const currentComments: comment[] | null =
@@ -46,9 +46,9 @@ export const ProductContainer = () => {
           (comment: comment) => comment.group === Number(params.id)
         )
       : null;
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const auth = getAuth().currentUser;
-  const user = auth !== null ? auth.email : null;
+  const user = auth !== null ? auth.email : '';
   const post = posts.find((item: post) => item.id === Number(params.id));
   useEffect(() => {
     dispatch(readPost());

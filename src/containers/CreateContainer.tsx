@@ -2,7 +2,7 @@ import { useNavigate } from 'react-router-dom';
 import { TextEditor } from '../editors/TextEditor';
 import tw from 'tailwind-styled-components';
 import { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useAppSelector, useAppDispatch } from '../redux/app';
 import { createPost, readPost } from '../firebase/function';
 import { post } from '../redux/postSlice';
 import { auth } from '../firebase/app';
@@ -33,8 +33,8 @@ input input-bordered
 
 export const CreateContainer = () => {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
-  const posts: post[] = useSelector((state: any) => {
+  const dispatch = useAppDispatch();
+  const posts: post[] = useAppSelector((state: any) => {
     return state.post.data;
   });
   const [info, setInfo] = useState<post>({

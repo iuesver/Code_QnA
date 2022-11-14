@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useAppDispatch } from '../redux/app';
 import { Link } from 'react-router-dom';
 import { register, logIn, logOut } from '../firebase/auth';
 import tw from 'tailwind-styled-components';
@@ -21,7 +21,7 @@ export const HeaderContainer = () => {
   const [signIn, setSignIn] = useState(false);
   const [signUp, setSignUp] = useState(false);
   const [signUpInfo, setSignUpInfo] = useState({ email: '', password: '' });
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const { email, password } = signUpInfo;
   const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;

@@ -3,7 +3,7 @@ import { plusLike } from '../firebase/function';
 import { post } from './postSlice';
 
 interface initialStateInit {
-  data: number | null;
+  data: post | null;
   error: SerializedError | null;
   loading: boolean;
 }

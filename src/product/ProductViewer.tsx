@@ -4,7 +4,7 @@ import { post } from '../redux/postSlice';
 import tw from 'tailwind-styled-components';
 import { Params, useNavigate } from 'react-router-dom';
 import { EllipsisVerticalIcon } from '@heroicons/react/24/solid';
-import { useDispatch } from 'react-redux';
+import { useAppDispatch } from '../redux/app';
 import { deletePost } from '../firebase/function';
 
 const Article = tw.article`
@@ -31,7 +31,7 @@ export const ProductViewer = ({
   user: string;
 }) => {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const post: post | undefined = posts.find(
     (item: post) => item.id === Number(params.id)
   );
@@ -55,7 +55,6 @@ export const ProductViewer = ({
                       onClick={() => {
                         dispatch(deletePost(Number(params.id)));
                         alert('게시물이 삭제되었습니다');
-                        window.location.reload();
                         navigate('/');
                       }}
                     >
