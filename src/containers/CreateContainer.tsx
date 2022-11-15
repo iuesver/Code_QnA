@@ -6,6 +6,8 @@ import { useAppSelector, useAppDispatch } from '../redux/app';
 import { createPost, readPost } from '../firebase/function';
 import { post } from '../redux/postSlice';
 import { auth } from '../firebase/app';
+import { findID } from '../functions/findID';
+import { LoadingContainer } from './LoadingContainer';
 
 const BtnDiv = tw.div`
 flex justify-end p-2
@@ -43,11 +45,11 @@ export const CreateContainer = () => {
     content: '',
     desc: '',
     author: '',
-    id: posts?.length,
+    id: findID(posts),
     date: new Date().toLocaleDateString(),
     like: 0,
   });
-  const { title, category, content, desc, author } = info;
+  const { title, category, content, desc, author, id } = info;
   const onChange = (
     event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
@@ -66,15 +68,29 @@ export const CreateContainer = () => {
           ['author']: user.email,
         });
       } else {
+        alert('로그인을 해주세요');
         navigate('/');
       }
     });
   }, [dispatch]);
+  if (!posts) {
+    return <LoadingContainer />;
+  }
   return (
     <>
       <TextEditor info={info} setFunc={setInfo} />
       <BtnDiv>
-        <AddBtn htmlFor="add-modal">작성하기</AddBtn>
+        <AddBtn
+          htmlFor="add-modal"
+          onClick={() => {
+            setInfo({
+              ...info,
+              ['id']: findID(posts),
+            });
+          }}
+        >
+          작성하기
+        </AddBtn>
         <input type="checkbox" id="add-modal" className="modal-toggle" />
         <div className="modal">
           <div className="modal-box">

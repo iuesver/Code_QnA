@@ -6,7 +6,6 @@ import { postSlice } from './postSlice';
 import { commentSlice } from './commentSlice';
 import { plusLikeSlice } from './plusLikeSlice';
 import { userSlice } from './userSlice';
-import { Omit } from '@reduxjs/toolkit/dist/tsHelpers';
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
 
 const store = configureStore({

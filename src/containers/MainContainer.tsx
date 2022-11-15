@@ -4,7 +4,7 @@ import { SideBar } from '../modules/SideBar';
 import { MainPost } from '../modules/MainPost';
 import { readComment, readPost } from '../firebase/function';
 import { useAppSelector, useAppDispatch } from '../redux/app';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { LoadingContainer } from './LoadingContainer';
 import { post } from '../redux/postSlice';
 import { comment } from '../redux/commentSlice';
@@ -21,6 +21,7 @@ export const MainContainer = () => {
     return state.comment.data;
   });
   const dispatch = useAppDispatch();
+
   useEffect(() => {
     dispatch(readPost());
     dispatch(readComment());

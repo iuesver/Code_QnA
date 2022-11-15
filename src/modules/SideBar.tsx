@@ -18,8 +18,8 @@ export const SideBar = ({ posts }: { posts: post[] }) => {
   const [sortByDatePosts, setSortByDatePosts] = useState<post[]>([]);
   useEffect(() => {
     if (posts.length !== 0 && typeof posts !== 'undefined') {
-      setSortByLikePosts(sortByLike([...posts]));
-      setSortByDatePosts(sortByDate([...posts]));
+      setSortByLikePosts(sortByLike(posts.slice(0, 5)));
+      setSortByDatePosts(sortByDate(posts.slice(0, 5)));
     }
   }, [posts]);
   if (posts.length === 0 || typeof posts === 'undefined') {
