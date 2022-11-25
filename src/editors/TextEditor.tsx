@@ -10,7 +10,7 @@ export const TextEditor = ({
   info: any;
   setFunc: Function;
 }) => {
-  const editorRef = useRef(null);
+  const editorRef = useRef<Editor>(null);
   useEffect(() => {
     import('@toast-ui/editor/dist/toastui-editor.css');
   }, []);
@@ -25,7 +25,7 @@ export const TextEditor = ({
       useCommandShortcut={true}
       ref={editorRef}
       onChange={() => {
-        const value = editorRef.current.getInstance().getHTML();
+        const value = editorRef.current?.getInstance().getHTML();
         setFunc({
           ...info,
           ['content']: value,
