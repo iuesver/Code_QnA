@@ -9,19 +9,19 @@ stackoverflow의 영어를 읽다 지쳐 만든 코드관련 Q&amp;A 커뮤니�
 
 ## 기술 스택
 <br>
-1. typescript
-2. react (vite)
-3. tailwind CSS (daisy UI)
-4. redux (redux-thunk)
-5. firebase (DB, auth, hosting)
+* typescript
+* react (vite)
+* tailwind CSS (daisy UI)
+* redux (redux-thunk)
+* firebase (DB, auth, hosting)
 
 ## 주요 기능
 <br>
-1. 로그인 기능 및 로그인 상태에 따른 웹페이지 내 사용자 활동 제한
-2. database-redux 간의 CRUD 비동기 처리 동작
-3. Toast ui editor를 활용한 게시물 작성 및 게시물 확인
-4. 로딩 시 페이지 처리 및 변경에 따른 데이터 필터링
-5. 전체적인 디자인 및 마크업
+* 로그인 기능 및 로그인 상태에 따른 웹페이지 내 사용자 활동 제한
+* database-redux 간의 CRUD 비동기 처리 동작
+* Toast ui editor를 활용한 게시물 작성 및 게시물 확인
+* 로딩 시 페이지 처리 및 변경에 따른 데이터 필터링
+* 전체적인 디자인 및 마크업
 
 ## 프로젝트 후기
 <br>
