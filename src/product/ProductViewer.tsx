@@ -28,7 +28,7 @@ export const ProductViewer = ({
 }: {
   posts: post[];
   params: Readonly<Params<string>>;
-  user: string;
+  user: string | null;
 }) => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();

@@ -5,7 +5,6 @@ import {
   doc,
   getDoc,
   updateDoc,
-  increment,
 } from 'firebase/firestore';
 import { comment } from '../redux/commentSlice';
 import { post } from '../redux/postSlice';
@@ -193,37 +192,34 @@ export const deleteComment = createAsyncThunk(
   }
 );
 
-export const plusLike = createAsyncThunk(
-  'plusLike',
-  async ({ post }: { post: post }) => {
-    const db = await doc(firestore, 'data', 'posts');
-    try {
-      const response = await getDoc(db);
-      if (response.exists()) {
-        let products: post[] = response.data().post;
-        let product = products.find((item: post) => item.id === post.id);
-        await updateDoc(db, {
-          post: arrayRemove(product),
-        });
-      }
+export const plusLike = createAsyncThunk('plusLike', async (post: post) => {
+  const db = await doc(firestore, 'data', 'posts');
+  try {
+    const response = await getDoc(db);
+    if (response.exists()) {
+      let posts = response.data().post;
+      let item = posts.find((item: post) => item.id === post.id);
       await updateDoc(db, {
-        post: arrayUnion(db, {
-          author: post.author,
-          content: post.content,
-          date: post.date,
-          desc: post.desc,
-          id: post.id,
-          title: post.title,
-          like: post.like + 1,
-        }),
+        post: arrayRemove(item),
       });
-      const result = await getDoc(db);
-      if (result.exists()) {
-        let posts = result.data().post;
-        return posts;
-      }
-    } catch (error) {
-      console.error(error);
     }
+    await updateDoc(db, {
+      post: arrayUnion(db, {
+        author: post.author,
+        content: post.content,
+        date: post.date,
+        desc: post.desc,
+        id: post.id,
+        title: post.title,
+        like: post.like + 1,
+      }),
+    });
+    const result = await getDoc(db);
+    if (result.exists()) {
+      let posts = result.data().post;
+      return posts;
+    }
+  } catch (error) {
+    console.error(error);
   }
-);
+});
