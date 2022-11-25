@@ -1,5 +1,4 @@
 import tw from 'tailwind-styled-components';
-import { Link } from 'react-router-dom';
 
 const List = tw.ul`
 menu bg-base-100 w-56 p-2 rounded-box shadow-lg
@@ -11,7 +10,7 @@ menu-title
 
 export const Menu = () => {
   return (
-    <nav>
+    <nav className="hidden sm:block">
       <List>
         <li>
           <a href="/">전체</a>

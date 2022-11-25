@@ -8,7 +8,7 @@ import { sortPosts } from '../functions/sortPosts';
 import { LoadingContainer } from '../containers/LoadingContainer';
 
 const Article = tw.article`
-flex flex-col w-1/2 shadow-lg
+flex flex-col w-full shadow-lg sm:w-1/2
 `;
 
 const SearchBar = tw.input`
@@ -58,7 +58,7 @@ export const MainPost = ({
   return (
     <Article>
       <div>
-        <SearchBar type="search" placeholder="무엇이든 물어보세요!" />
+        {/* <SearchBar type="search" placeholder="무엇이든 물어보세요!" /> */}
         <BtnDiv>
           <ul className="tabs p-2">
             <li

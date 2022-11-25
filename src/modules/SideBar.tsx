@@ -26,7 +26,7 @@ export const SideBar = ({ posts }: { posts: post[] }) => {
     return <LoadingContainer />;
   }
   return (
-    <aside>
+    <aside className="hidden sm:block">
       <List>
         <Category>
           <span>인기 글</span>
