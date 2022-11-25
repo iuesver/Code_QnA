@@ -9,8 +9,8 @@ stackoverflow의 영어를 읽다 지쳐 만든 코드관련 Q&amp;A 커뮤니�
 
 ## 기술 스택
 <br>
-1.typescript
-2.react (vite)
+1. typescript
+2. react (vite)
 3. tailwind CSS (daisy UI)
 4. redux (redux-thunk)
 5. firebase (DB, auth, hosting)
