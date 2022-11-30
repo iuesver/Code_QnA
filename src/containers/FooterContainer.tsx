@@ -8,7 +8,7 @@ export const FooterContainer = () => {
   return (
     <Footer>
       <div>
-        <p className="font-bold">iuesver's private project</p>
+        <h1 className="font-bold">Code Q&A</h1>
         <p className="font-bold">Web Service for Q&A</p>
         <p>2022 . 11</p>
       </div>
