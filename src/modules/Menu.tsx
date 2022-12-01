@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import tw from 'tailwind-styled-components';
 
 const List = tw.ul`
@@ -13,28 +14,28 @@ export const Menu = () => {
     <nav className="hidden sm:block">
       <List>
         <li>
-          <a href="/">전체</a>
+          <Link to="/">전체</Link>
         </li>
         <Category>
           <span>프로그래밍 언어</span>
         </Category>
         <li>
-          <a href="?category=타입스크립트">타입스크립트</a>
+          <Link to="?category=타입스크립트">타입스크립트</Link>
         </li>
         <li>
-          <a href="?category=자바스크립트">자바스크립트</a>
+          <Link to="?category=자바스크립트">자바스크립트</Link>
         </li>
         <Category>
           <span>프레임워크</span>
         </Category>
         <li>
-          <a href="?category=리액트">리액트</a>
+          <Link to="?category=리액트">리액트</Link>
         </li>
         <li>
-          <a href="?category=뷰">뷰</a>
+          <Link to="?category=뷰">뷰</Link>
         </li>
         <li>
-          <a href="?category=앵귤러">앵귤러</a>
+          <Link to="?category=앵귤러">앵귤러</Link>
         </li>
       </List>
     </nav>

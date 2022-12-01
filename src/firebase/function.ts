@@ -15,6 +15,7 @@ export const createPost = createAsyncThunk(
   async ({
     title,
     content,
+    category,
     author,
     id,
     desc,
@@ -27,6 +28,7 @@ export const createPost = createAsyncThunk(
         post: arrayUnion({
           title: title,
           content: content,
+          category: category,
           author: author,
           id: id,
           desc: desc,
@@ -197,26 +199,24 @@ export const plusLike = createAsyncThunk('plusLike', async (post: post) => {
   try {
     const response = await getDoc(db);
     if (response.exists()) {
-      let posts = response.data().post;
-      let item = posts.find((item: post) => item.id === post.id);
       await updateDoc(db, {
-        post: arrayRemove(item),
+        post: arrayUnion(db, {
+          author: post.author,
+          content: post.content,
+          category: post.category,
+          date: post.date,
+          desc: post.desc,
+          id: post.id,
+          title: post.title,
+          like: post.like + 1,
+        }),
       });
     }
     await updateDoc(db, {
-      post: arrayUnion(db, {
-        author: post.author,
-        content: post.content,
-        date: post.date,
-        desc: post.desc,
-        id: post.id,
-        title: post.title,
-        like: post.like + 1,
-      }),
+      post: arrayRemove(post),
     });
-    const result = await getDoc(db);
-    if (result.exists()) {
-      let posts = result.data().post;
+    if (response.exists()) {
+      let posts = response.data().post;
       return posts;
     }
   } catch (error) {
