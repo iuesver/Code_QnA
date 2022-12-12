@@ -47,7 +47,7 @@ export const ProductContainer = () => {
         )
       : null;
   const dispatch = useAppDispatch();
-  const commentRef = useRef(null);
+  const commentRef = useRef<any>();
   const auth = getAuth().currentUser;
   const user = auth !== null ? auth.email : '';
   const post = posts.find((item: post) => item.id === Number(params.id));
@@ -90,6 +90,7 @@ export const ProductContainer = () => {
               type="text"
               placeholder="댓글을 작성해주세요..."
               className="input input-bordered w-full"
+              value=""
               ref={commentRef}
               onChange={(event) => {
                 setCommentInfo(event.target.value);
