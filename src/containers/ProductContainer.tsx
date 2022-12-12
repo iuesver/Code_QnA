@@ -90,7 +90,6 @@ export const ProductContainer = () => {
               type="text"
               placeholder="댓글을 작성해주세요..."
               className="input input-bordered w-full"
-              value=""
               ref={commentRef}
               onChange={(event) => {
                 setCommentInfo(event.target.value);
