@@ -158,7 +158,6 @@ export const HeaderContainer = () => {
                     className="btn btn-primary rounded-full w-20 px-5 mr-2"
                     onClick={() => {
                       dispatch(logIn(signUpInfo));
-                      window.location.reload();
                     }}
                   />
                   <label

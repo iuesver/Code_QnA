@@ -8,7 +8,7 @@ import {
 
 export const register = createAsyncThunk(
   'user',
-  async ({ email, password }: any) => {
+  async ({ email, password }: { email: string; password: string }) => {
     try {
       await createUserWithEmailAndPassword(auth, email, password);
     } catch (error) {
@@ -19,11 +19,12 @@ export const register = createAsyncThunk(
 
 export const logIn = createAsyncThunk(
   'user',
-  async ({ email, password }: any) => {
+  async ({ email, password }: { email: string; password: string }) => {
     try {
       await signInWithEmailAndPassword(auth, email, password);
     } catch (error) {
       alert('아이디 또는 비밀번호를 확인해주세요');
+      console.error(error);
     }
   }
 );
