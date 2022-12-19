@@ -52,8 +52,11 @@ export const MainPost = ({
     if (posts && comments && keyWord !== null) {
       setList(sortPosts([...posts], [...comments], keyWord));
     }
+    if (urlParams !== url) {
+      setPage(1);
+    }
     setUrl(urlParams);
-  }, [urlParams, posts, keyWord, page]);
+  }, [urlParams, posts, keyWord]);
   if (list.length === 0) {
     return <LoadingContainer />;
   }
