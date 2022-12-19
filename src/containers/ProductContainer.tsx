@@ -64,7 +64,7 @@ export const ProductContainer = () => {
       <div className="flex justify-center">
         <button
           onClick={() => {
-            dispatch(plusLike(post));
+            dispatch(plusLike({ post: post }));
           }}
           className="btn gap-2 bg-white text-black hover:text-white rounded-full"
         >
