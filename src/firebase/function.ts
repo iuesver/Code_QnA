@@ -194,32 +194,35 @@ export const deleteComment = createAsyncThunk(
   }
 );
 
-export const plusLike = createAsyncThunk('plusLike', async (post: post) => {
-  const db = await doc(firestore, 'data', 'posts');
-  try {
-    const response = await getDoc(db);
-    if (response.exists()) {
+export const plusLike = createAsyncThunk(
+  'plusLike',
+  async ({ post }: { post: post }) => {
+    const db = await doc(firestore, 'data', 'posts');
+    try {
+      const response = await getDoc(db);
+      if (response.exists()) {
+        await updateDoc(db, {
+          post: arrayUnion(db, {
+            author: post.author,
+            content: post.content,
+            category: post.category,
+            date: post.date,
+            desc: post.desc,
+            id: post.id,
+            title: post.title,
+            like: post.like + 1,
+          }),
+        });
+      }
       await updateDoc(db, {
-        post: arrayUnion(db, {
-          author: post.author,
-          content: post.content,
-          category: post.category,
-          date: post.date,
-          desc: post.desc,
-          id: post.id,
-          title: post.title,
-          like: post.like + 1,
-        }),
+        post: arrayRemove(post),
       });
+      if (response.exists()) {
+        let posts = response.data().post;
+        return posts;
+      }
+    } catch (error) {
+      console.error(error);
     }
-    await updateDoc(db, {
-      post: arrayRemove(post),
-    });
-    if (response.exists()) {
-      let posts = response.data().post;
-      return posts;
-    }
-  } catch (error) {
-    console.error(error);
   }
-});
+);
