@@ -148,20 +148,30 @@ export const MainPost = ({
         </div>
       </div>
       <div className="btn-group flex justify-center m-2">
-        {Array.from({ length: totalPageNum(list) }, (v, i) => (
-          <button
-            key={i}
-            className="btn hover:bg-blue-700 hover:text-white border-none bg-white text-black"
-            onClick={(
-              event: React.MouseEvent<HTMLButtonElement, MouseEvent>
-            ) => {
-              const target = event.target as HTMLButtonElement;
-              setPage(Number(target.innerHTML));
-            }}
-          >
-            {i + 1}
-          </button>
-        ))}
+        {Array.from(
+          {
+            length:
+              url === null
+                ? totalPageNum(list)
+                : totalPageNum(
+                    list.filter((post: post) => post.category === url)
+                  ),
+          },
+          (v, i) => (
+            <button
+              key={i}
+              className="btn hover:bg-blue-700 hover:text-white border-none bg-white text-black"
+              onClick={(
+                event: React.MouseEvent<HTMLButtonElement, MouseEvent>
+              ) => {
+                const target = event.target as HTMLButtonElement;
+                setPage(Number(target.innerHTML));
+              }}
+            >
+              {i + 1}
+            </button>
+          )
+        )}
       </div>
     </Article>
   );
