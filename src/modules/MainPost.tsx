@@ -12,10 +12,6 @@ const Article = tw.article`
 flex flex-col justify-between w-full shadow-lg sm:w-1/2
 `;
 
-const SearchBar = tw.input`
-input input-bordered input-lg w-full
-`;
-
 const BtnDiv = tw.div`
 flex justify-between
 `;
@@ -57,14 +53,13 @@ export const MainPost = ({
     }
     setUrl(urlParams);
   }, [urlParams, posts, keyWord]);
-  if (list.length === 0) {
-    return <LoadingContainer />;
-  }
+  // if (list.length === 0) {
+  //   return <LoadingContainer />;
+  // }
   return (
     <Article>
       <div>
         <div>
-          {/* <SearchBar type="search" placeholder="무엇이든 물어보세요!" /> */}
           <BtnDiv>
             <ul className="tabs p-2">
               <li

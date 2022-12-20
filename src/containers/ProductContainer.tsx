@@ -1,4 +1,4 @@
-import { useAppDispatch, useAppSelector } from '../redux/app';
+import { RootState, useAppDispatch, useAppSelector } from '../redux/app';
 import '@toast-ui/editor/dist/toastui-editor-viewer.css';
 import { useEffect, useRef, useState } from 'react';
 import { readComment, readPost, plusLike } from '../firebase/function';
@@ -34,10 +34,10 @@ text-gray-400
 export const ProductContainer = () => {
   const params = useParams();
   const [commentInfo, setCommentInfo] = useState('');
-  const posts: post[] = useAppSelector((state: any) => {
+  const posts: post[] = useAppSelector((state: RootState) => {
     return state.post.data;
   });
-  const comments: comment[] = useAppSelector((state: any) => {
+  const comments: comment[] = useAppSelector((state: RootState) => {
     return state.comment.data;
   });
   const currentComments: comment[] | null =

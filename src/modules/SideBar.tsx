@@ -22,9 +22,9 @@ export const SideBar = ({ posts }: { posts: post[] }) => {
       setSortByDatePosts(sortByDate(posts.slice(0, 5)));
     }
   }, [posts]);
-  if (posts.length === 0 || typeof posts === 'undefined') {
-    return <LoadingContainer />;
-  }
+  // if (posts.length === 0 || typeof posts === 'undefined') {
+  //   return <LoadingContainer />;
+  // }
   return (
     <aside className="hidden sm:block">
       <List>

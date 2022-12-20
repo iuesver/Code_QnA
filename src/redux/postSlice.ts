@@ -13,7 +13,7 @@ export interface post {
 }
 
 export interface postInit {
-  data: post | post[];
+  data: post[];
   error: SerializedError | null;
   loading: boolean;
 }

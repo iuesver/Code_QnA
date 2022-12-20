@@ -3,7 +3,7 @@ import tw from 'tailwind-styled-components';
 import { SideBar } from '../modules/SideBar';
 import { MainPost } from '../modules/MainPost';
 import { readComment, readPost } from '../firebase/function';
-import { useAppSelector, useAppDispatch } from '../redux/app';
+import { useAppSelector, useAppDispatch, RootState } from '../redux/app';
 import { useEffect } from 'react';
 import { LoadingContainer } from './LoadingContainer';
 import { post } from '../redux/postSlice';
@@ -14,10 +14,10 @@ flex justify-evenly min-h-screen p-4
 `;
 
 export const MainContainer = () => {
-  const posts: post[] = useAppSelector((state: any) => {
+  const posts: post[] = useAppSelector((state: RootState) => {
     return state.post.data;
   });
-  const comments: comment[] = useAppSelector((state: any) => {
+  const comments: comment[] = useAppSelector((state: RootState) => {
     return state.comment.data;
   });
   const dispatch = useAppDispatch();

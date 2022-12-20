@@ -9,13 +9,13 @@ export interface comment {
 }
 
 export interface commentInit {
-  data: comment | comment[] | null;
+  data: comment[];
   error: SerializedError | null;
   loading: boolean;
 }
 
 const initialState: commentInit = {
-  data: null,
+  data: [],
   error: null,
   loading: false,
 };
