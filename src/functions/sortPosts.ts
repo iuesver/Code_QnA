@@ -13,13 +13,10 @@ export const sortPosts = (
   switch (str) {
     case '인기':
       return (arr = sortByLike(posts));
-      break;
     case '최신':
       return (arr = sortByDate(posts));
-      break;
     case '댓글':
       return (arr = sortByComments(posts, comments));
-      break;
     default:
       break;
   }

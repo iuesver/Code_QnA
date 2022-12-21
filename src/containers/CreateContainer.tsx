@@ -9,6 +9,10 @@ import { auth } from '../firebase/app';
 import { findID } from '../functions/findID';
 import { LoadingContainer } from './LoadingContainer';
 
+const Section = tw.section`
+min-h-screen
+`;
+
 const BtnDiv = tw.div`
 flex justify-end p-2
 `;
@@ -77,7 +81,7 @@ export const CreateContainer = () => {
     return <LoadingContainer />;
   }
   return (
-    <>
+    <Section>
       <TextEditor info={info} setFunc={setInfo} />
       <BtnDiv>
         <AddBtn
@@ -147,6 +151,6 @@ export const CreateContainer = () => {
         </div>
         <DeleteBtn onClick={() => navigate(-1)}>취소하기</DeleteBtn>
       </BtnDiv>
-    </>
+    </Section>
   );
 };

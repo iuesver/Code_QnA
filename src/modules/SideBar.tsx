@@ -34,7 +34,7 @@ export const SideBar = ({ posts }: { posts: post[] }) => {
         <ul>
           {sortByLikePosts.map((item: post) => (
             <li key={item.id}>
-              <Link to={'/' + item.id}>{item.title}</Link>
+              <Link to={'/product/' + item.id}>{item.title}</Link>
             </li>
           ))}
         </ul>
@@ -46,7 +46,7 @@ export const SideBar = ({ posts }: { posts: post[] }) => {
         <ul>
           {sortByDatePosts.map((item: post) => (
             <li key={item.id}>
-              <Link to={'/' + item.id}>{item.title}</Link>
+              <Link to={'/product/' + item.id}>{item.title}</Link>
             </li>
           ))}
         </ul>

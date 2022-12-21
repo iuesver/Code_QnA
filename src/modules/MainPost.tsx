@@ -9,7 +9,7 @@ import { LoadingContainer } from '../containers/LoadingContainer';
 import { pagination, totalPageNum } from '../functions/pagination';
 
 const Article = tw.article`
-flex flex-col justify-between w-full shadow-lg sm:w-1/2
+flex flex-col justify-between w-full h-full shadow-lg sm:w-1/2
 `;
 
 const BtnDiv = tw.div`
@@ -105,7 +105,7 @@ export const MainPost = ({
                       <ChevronDownIcon className="inline-block w-6 h-6" />
                     </LikeDiv>
                     <div>
-                      <Link to={`/${post.id}`}>
+                      <Link to={`/product/${post.id}`}>
                         <h1 className="text-lg font-semibold">
                           {post.title}
                           <span className="text-sm text-accent px-1">
@@ -130,7 +130,7 @@ export const MainPost = ({
                       <ChevronDownIcon className="inline-block w-6 h-6" />
                     </LikeDiv>
                     <div>
-                      <Link to={`/${post.id}`}>
+                      <Link to={`/product/${post.id}`}>
                         <h1 className="text-lg font-semibold">
                           {post.title}
                           <span className="text-sm text-accent px-1">
