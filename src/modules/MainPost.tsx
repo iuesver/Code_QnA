@@ -60,6 +60,24 @@ export const MainPost = ({
     <Article>
       <div>
         <div>
+          <input
+            type="search"
+            name=""
+            id=""
+            className="w-full h-12 py-2 px-6"
+            placeholder="무엇이든 검색해보세요!"
+            onChange={(event) => {
+              setList(
+                posts.filter(
+                  (item) =>
+                    item.title.includes(event.target.value) ||
+                    item.desc.includes(event.target.value)
+                )
+              );
+            }}
+          />
+        </div>
+        <div>
           <BtnDiv>
             <ul className="tabs p-2">
               <li
