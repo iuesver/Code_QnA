@@ -56,7 +56,7 @@ export const MainPost = ({
   if (typeof list === undefined) {
     return <LoadingContainer />;
   }
-  if (list.filter((item) => item.category === url).length === 0) {
+  if (url && list.filter((item) => item.category === url).length === 0) {
     return (
       <Article>
         <div className="hero min-h-screen">
