@@ -9,7 +9,7 @@ import { LoadingContainer } from '../containers/LoadingContainer';
 import { pagination, totalPageNum } from '../functions/pagination';
 
 const Article = tw.article`
-flex flex-col justify-between w-full h-full shadow-lg sm:w-1/2
+flex flex-col justify-between w-full h-full min-h-screen shadow-lg sm:w-1/2
 `;
 
 const BtnDiv = tw.div`
@@ -53,9 +53,28 @@ export const MainPost = ({
     }
     setUrl(urlParams);
   }, [urlParams, posts, keyWord]);
-  // if (list.length === 0) {
-  //   return <LoadingContainer />;
-  // }
+  if (typeof list === undefined) {
+    return <LoadingContainer />;
+  }
+  if (list.filter((item) => item.category === url).length === 0) {
+    return (
+      <Article>
+        <div className="hero min-h-screen">
+          <div className="hero-content text-center">
+            <div className="max-w-md">
+              <h1 className="text-5xl font-bold">게시물이 없습니다.</h1>
+              <p className="py-6">첫번째 게시물의 주인공이 되어보세요!</p>
+              <Link to={`/create`}>
+                <button className="btn btn-primary text-white rounded-lg">
+                  글 등록하기
+                </button>
+              </Link>
+            </div>
+          </div>
+        </div>
+      </Article>
+    );
+  }
   return (
     <Article>
       <div>
