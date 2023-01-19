@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useAppDispatch } from '../redux/app';
 import { Link } from 'react-router-dom';
 import { register, logIn, logOut } from '../firebase/auth';
@@ -21,6 +21,7 @@ export const HeaderContainer = () => {
   const [signIn, setSignIn] = useState(false);
   const [signUp, setSignUp] = useState(false);
   const [signUpInfo, setSignUpInfo] = useState({ email: '', password: '' });
+  const submitRef = useRef<HTMLInputElement>(null);
   const dispatch = useAppDispatch();
   const { email, password } = signUpInfo;
   const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -137,6 +138,11 @@ export const HeaderContainer = () => {
                 name="password"
                 id="user-password"
                 onChange={onChange}
+                onKeyUp={(event) => {
+                  if (event.keyCode === 13) {
+                    dispatch(logIn(signUpInfo));
+                  }
+                }}
                 value={password}
                 required
               />
@@ -156,6 +162,7 @@ export const HeaderContainer = () => {
                     type="submit"
                     value="로그인"
                     className="btn btn-primary rounded-full w-20 px-5 mr-2"
+                    ref={submitRef}
                     onClick={() => {
                       dispatch(logIn(signUpInfo));
                     }}

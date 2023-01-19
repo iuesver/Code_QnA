@@ -1,6 +1,6 @@
 import { RootState, useAppDispatch, useAppSelector } from '../redux/app';
 import '@toast-ui/editor/dist/toastui-editor-viewer.css';
-import { useEffect, useRef, useState } from 'react';
+import { ChangeEvent, useEffect, useRef, useState } from 'react';
 import { readComment, readPost, plusLike } from '../firebase/function';
 import tw from 'tailwind-styled-components';
 import { useParams } from 'react-router-dom';
@@ -58,6 +58,9 @@ export const ProductContainer = () => {
   if (!posts || !comments || !post) {
     return <LoadingContainer />;
   }
+  const changeComment = (event: ChangeEvent<HTMLInputElement>) => {
+    setCommentInfo(event.target.value);
+  };
   return (
     <Section>
       <ProductViewer posts={posts} params={params} user={user} />
@@ -91,8 +94,18 @@ export const ProductContainer = () => {
               placeholder="댓글을 작성해주세요..."
               className="input input-bordered w-full"
               ref={commentRef}
-              onChange={(event) => {
-                setCommentInfo(event.target.value);
+              onChange={changeComment}
+              onKeyUp={(event) => {
+                if (event.keyCode === 13) {
+                  dispatch(
+                    createComment({
+                      comment: commentInfo,
+                      commenter: user || 'unknown',
+                      group: Number(params.id),
+                      id: comments.length + 1,
+                    })
+                  );
+                }
               }}
             />
             <button
