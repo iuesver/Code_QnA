@@ -23,8 +23,8 @@ const ProviderBox = tw.div`
 flex flex-col items-center py-2
 `;
 
-const ProviderDiv = tw.div`
-flex items-center bg-black w-56 h-12 my-1 cursor-pointer
+const ProviderBtn = tw.button`
+flex items-center bg-black w-56 h-12 my-1
 `;
 
 const ProviderDesc = tw.p`
@@ -191,11 +191,13 @@ export const HeaderContainer = () => {
                 </div>
               </div>
               <ProviderBox>
-                <ProviderDiv
+                <ProviderBtn
                   className="bg-blue-500"
                   id="google"
                   onClick={(event) =>
-                    dispatch(logInWithProvider(event.target.id))
+                    dispatch(
+                      logInWithProvider((event.target as HTMLButtonElement).id)
+                    )
                   }
                 >
                   <img
@@ -205,11 +207,13 @@ export const HeaderContainer = () => {
                     className="h-14 py-1"
                   />
                   <ProviderDesc id="google">Sign in with Google</ProviderDesc>
-                </ProviderDiv>
-                <ProviderDiv
+                </ProviderBtn>
+                <ProviderBtn
                   id="github"
                   onClick={(event) =>
-                    dispatch(logInWithProvider(event.target.id))
+                    dispatch(
+                      logInWithProvider((event.target as HTMLButtonElement).id)
+                    )
                   }
                 >
                   <img
@@ -219,7 +223,7 @@ export const HeaderContainer = () => {
                     className="w-12 h-10 p-2"
                   />
                   <ProviderDesc id="github">Sign in with Github</ProviderDesc>
-                </ProviderDiv>
+                </ProviderBtn>
               </ProviderBox>
             </div>
           </div>
