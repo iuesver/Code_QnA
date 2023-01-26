@@ -1,13 +1,16 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { auth } from './app';
+import { auth, googleAuthProvider, githubAuthProvider } from './app';
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
+  signInWithPopup,
   signOut,
+  GoogleAuthProvider,
+  GithubAuthProvider,
 } from 'firebase/auth';
 
 export const register = createAsyncThunk(
-  'user',
+  'register',
   async ({ email, password }: { email: string; password: string }) => {
     try {
       await createUserWithEmailAndPassword(auth, email, password);
@@ -18,7 +21,7 @@ export const register = createAsyncThunk(
 );
 
 export const logIn = createAsyncThunk(
-  'user',
+  'logIn',
   async ({ email, password }: { email: string; password: string }) => {
     try {
       await signInWithEmailAndPassword(auth, email, password);
@@ -29,7 +32,33 @@ export const logIn = createAsyncThunk(
   }
 );
 
-export const logOut = createAsyncThunk('user', async () => {
+export const logInWithProvider = createAsyncThunk(
+  'loginWithProvider',
+  async (key: string) => {
+    try {
+      switch (key) {
+        case 'google':
+          await signInWithPopup(auth, googleAuthProvider).then((res) => {
+            const credential = GoogleAuthProvider.credentialFromResult(res);
+            const token = credential?.accessToken;
+            const user = res.user;
+          });
+        case 'github':
+          await signInWithPopup(auth, githubAuthProvider).then((res) => {
+            const credential = GithubAuthProvider.credentialFromResult(res);
+            const token = credential?.accessToken;
+            const user = res.user;
+          });
+        default:
+          break;
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  }
+);
+
+export const logOut = createAsyncThunk('logOut', async () => {
   try {
     await signOut(auth);
   } catch (error) {

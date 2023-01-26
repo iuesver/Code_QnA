@@ -1,9 +1,11 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useAppDispatch } from '../redux/app';
 import { Link } from 'react-router-dom';
-import { register, logIn, logOut } from '../firebase/auth';
+import { register, logIn, logOut, logInWithProvider } from '../firebase/auth';
 import tw from 'tailwind-styled-components';
 import { auth } from '../firebase/app';
+import GoogleLogo from '../assets/btn_google_light_normal_ios.svg';
+import GithubLogo from '../assets/github-mark-white.svg';
 
 const Nav = tw.nav`
 navbar bg-primary text-white
@@ -15,6 +17,18 @@ flex-1 px-2
 
 const TextInput = tw.input`
 text-black input input-bordered input-sm input-primary w-full
+`;
+
+const ProviderBox = tw.div`
+flex flex-col items-center py-2
+`;
+
+const ProviderDiv = tw.div`
+flex items-center bg-black w-56 h-12 my-1 cursor-pointer
+`;
+
+const ProviderDesc = tw.p`
+text-white font-bold flex justify-center pl-2
 `;
 
 export const HeaderContainer = () => {
@@ -35,6 +49,7 @@ export const HeaderContainer = () => {
     auth.onAuthStateChanged((user) => {
       if (user) {
         setSignIn(true);
+        console.dir(user);
       } else {
         setSignIn(false);
       }
@@ -175,6 +190,37 @@ export const HeaderContainer = () => {
                   </label>
                 </div>
               </div>
+              <ProviderBox>
+                <ProviderDiv
+                  className="bg-blue-500"
+                  id="google"
+                  onClick={(event) =>
+                    dispatch(logInWithProvider(event.target.id))
+                  }
+                >
+                  <img
+                    src={GoogleLogo}
+                    id="google"
+                    alt=""
+                    className="h-14 py-1"
+                  />
+                  <ProviderDesc id="google">Sign in with Google</ProviderDesc>
+                </ProviderDiv>
+                <ProviderDiv
+                  id="github"
+                  onClick={(event) =>
+                    dispatch(logInWithProvider(event.target.id))
+                  }
+                >
+                  <img
+                    src={GithubLogo}
+                    id="github"
+                    alt=""
+                    className="w-12 h-10 p-2"
+                  />
+                  <ProviderDesc id="github">Sign in with Github</ProviderDesc>
+                </ProviderDiv>
+              </ProviderBox>
             </div>
           </div>
         )}

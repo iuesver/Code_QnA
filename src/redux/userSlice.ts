@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { register } from '../firebase/auth';
+import { logIn, register } from '../firebase/auth';
 
 const initialState: {
   data: any;
@@ -24,6 +24,17 @@ export const userSlice = createSlice({
       state.loading = false;
     });
     builder.addCase(register.rejected, (state, action) => {
+      state.error = action.error;
+      state.loading = false;
+    });
+    builder.addCase(logIn.pending, (state, action) => {
+      state.loading = true;
+    });
+    builder.addCase(logIn.fulfilled, (state, action) => {
+      state.data = action.payload;
+      state.loading = false;
+    });
+    builder.addCase(logIn.rejected, (state, action) => {
       state.error = action.error;
       state.loading = false;
     });
