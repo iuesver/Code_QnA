@@ -208,7 +208,7 @@ export const HeaderContainer = () => {
                   />
                   <ProviderDesc id="google">Sign in with Google</ProviderDesc>
                 </ProviderBtn>
-                <ProviderBtn
+                {/* <ProviderBtn
                   id="github"
                   onClick={(event) =>
                     dispatch(
@@ -223,7 +223,7 @@ export const HeaderContainer = () => {
                     className="w-12 h-10 p-2"
                   />
                   <ProviderDesc id="github">Sign in with Github</ProviderDesc>
-                </ProviderBtn>
+                </ProviderBtn> */}
               </ProviderBox>
             </div>
           </div>
