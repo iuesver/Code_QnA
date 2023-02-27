@@ -49,7 +49,6 @@ export const HeaderContainer = () => {
     auth.onAuthStateChanged((user) => {
       if (user) {
         setSignIn(true);
-        console.dir(user);
       } else {
         setSignIn(false);
       }
