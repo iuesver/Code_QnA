@@ -14,7 +14,7 @@ React와 TypeScript기반으로 제작한 한국 개발자들을 코드관련 Q&
 
 ### 프로젝트 링크
 
-[배포된 사이트 바로가기](https://code-qna.firebaseapp.com/)
+[배포된 사이트 바로가기](https://code-qna.vercel.app/)
 
 ### 프로젝트 실행 방법
 
