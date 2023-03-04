@@ -93,6 +93,12 @@ export const MainPost = ({
                     item.desc.includes(event.target.value)
                 )
               );
+              setPage(1);
+            }}
+            onKeyDown={(event: React.KeyboardEvent<HTMLInputElement>) => {
+              if (event.key === 'Escape') {
+                (event.target as HTMLElement).blur();
+              }
             }}
           />
         </div>
@@ -144,13 +150,19 @@ export const MainPost = ({
                     <div>
                       <Link to={`/product/${post.id}`}>
                         <h1 className="text-lg font-semibold">
-                          {post.title}
+                          {post.title.length < 35
+                            ? post.title
+                            : post.title.slice(0, 35) + '...'}
                           <span className="text-sm text-accent px-1">
                             [{commentsNum[post.id] || 0}]
                           </span>
                         </h1>
                       </Link>
-                      <p className="mt-2 text-gray-500">{post.desc}</p>
+                      <p className="mt-2 text-gray-500">
+                        {post.desc.length < 40
+                          ? post.desc
+                          : post.desc.slice(0, 40) + '...'}
+                      </p>
                     </div>
                   </div>
                 </div>
@@ -169,13 +181,19 @@ export const MainPost = ({
                     <div>
                       <Link to={`/product/${post.id}`}>
                         <h1 className="text-lg font-semibold">
-                          {post.title}
+                          {post.title.length < 35
+                            ? post.title
+                            : post.title.slice(0, 35) + '...'}
                           <span className="text-sm text-accent px-1">
                             [{commentsNum[post.id] || 0}]
                           </span>
                         </h1>
                       </Link>
-                      <p className="mt-2 text-gray-500">{post.desc}</p>
+                      <p className="mt-2 text-gray-500">
+                        {post.desc.length < 40
+                          ? post.desc
+                          : post.desc.slice(0, 40) + '...'}
+                      </p>
                     </div>
                   </div>
                 </div>
