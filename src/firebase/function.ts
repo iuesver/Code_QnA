@@ -120,7 +120,17 @@ export const readComment = createAsyncThunk('readComment', async () => {
 });
 export const createComment = createAsyncThunk(
   'createComment',
-  async ({ comment, commenter, group, id }: any) => {
+  async ({
+    comment,
+    commenter,
+    group,
+    id,
+  }: {
+    comment: string;
+    commenter: string | null;
+    group: number;
+    id: number;
+  }) => {
     const db = doc(firestore, 'data', 'comments');
     try {
       await updateDoc(db, {
@@ -197,29 +207,21 @@ export const deleteComment = createAsyncThunk(
 export const plusLike = createAsyncThunk(
   'plusLike',
   async ({ post }: { post: post }) => {
-    const db = await doc(firestore, 'data', 'posts');
+    const db = doc(firestore, 'data', 'posts');
     try {
       const response = await getDoc(db);
       if (response.exists()) {
-        await updateDoc(db, {
-          post: arrayUnion(db, {
-            author: post.author,
-            content: post.content,
-            category: post.category,
-            date: post.date,
-            desc: post.desc,
-            id: post.id,
-            title: post.title,
-            like: post.like + 1,
-          }),
+        const posts = response.data().post;
+        const updatedPosts = posts.map((data: post) => {
+          if (data.id === post.id) {
+            return { ...data, like: data.like + 1 };
+          }
+          return data;
         });
-      }
-      await updateDoc(db, {
-        post: arrayRemove(post),
-      });
-      if (response.exists()) {
-        let posts = response.data().post;
-        return posts;
+        await updateDoc(db, {
+          post: updatedPosts,
+        });
+        return updatedPosts;
       }
     } catch (error) {
       console.error(error);
