@@ -11,6 +11,7 @@ import { HandThumbUpIcon } from '@heroicons/react/24/solid';
 import { comment } from '../redux/commentSlice';
 import { getAuth } from 'firebase/auth';
 import { LoadingContainer } from './LoadingContainer';
+import { CommentEditor } from '../editors/CommentEditor';
 
 const Section = tw.section`
 flex flex-col w-3/4 h-full min-h-screen mx-auto my-2 rounded shadow-lg
@@ -33,7 +34,6 @@ text-gray-400
 
 export const ProductContainer = () => {
   const params = useParams();
-  const [commentInfo, setCommentInfo] = useState('');
   const posts: post[] = useAppSelector((state: RootState) => {
     return state.post.data;
   });
@@ -47,7 +47,6 @@ export const ProductContainer = () => {
         )
       : null;
   const dispatch = useAppDispatch();
-  const commentRef = useRef<any>();
   const auth = getAuth().currentUser;
   const user = auth !== null ? auth.email : '';
   const post = posts.find((item: post) => item.id === Number(params.id));
@@ -58,9 +57,6 @@ export const ProductContainer = () => {
   if (!posts || !comments || !post) {
     return <LoadingContainer />;
   }
-  const changeComment = (event: ChangeEvent<HTMLInputElement>) => {
-    setCommentInfo(event.target.value);
-  };
   return (
     <Section>
       <ProductViewer posts={posts} params={params} user={user} />
@@ -87,45 +83,7 @@ export const ProductContainer = () => {
             개
           </span>
         </div>
-        <div className="form-control">
-          <div className="input-group">
-            <input
-              type="text"
-              placeholder="댓글을 작성해주세요..."
-              className="input input-bordered w-full"
-              ref={commentRef}
-              onChange={changeComment}
-              onKeyUp={(event) => {
-                if (event.keyCode === 13) {
-                  dispatch(
-                    createComment({
-                      comment: commentInfo,
-                      commenter: user || 'unknown',
-                      group: Number(params.id),
-                      id: comments.length + 1,
-                    })
-                  );
-                }
-              }}
-            />
-            <button
-              onClick={(event) => {
-                dispatch(
-                  createComment({
-                    comment: commentInfo,
-                    commenter: user || 'unknown',
-                    group: Number(params.id),
-                    id: comments.length + 1,
-                  })
-                );
-                commentRef.current.value = '';
-              }}
-              className="w-20 btn btn-square btn-primary text-white"
-            >
-              작성하기
-            </button>
-          </div>
-        </div>
+        <CommentEditor />
         <div>
           {currentComments &&
             currentComments.map((comment: comment) => (

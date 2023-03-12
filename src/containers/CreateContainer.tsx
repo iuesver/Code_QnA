@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import { TextEditor } from '../editors/TextEditor';
 import tw from 'tailwind-styled-components';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useAppSelector, useAppDispatch, RootState } from '../redux/app';
 import { createPost, readPost } from '../firebase/function';
 import { post } from '../redux/postSlice';
@@ -54,15 +54,16 @@ export const CreateContainer = () => {
     like: 0,
   });
   const { title, category, content, desc, author, id } = info;
-  const onChange = (
-    event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
-  ) => {
-    const { name, value }: { name: string; value: string } = event.target;
-    setInfo({
-      ...info,
-      [name]: value,
-    });
-  };
+  const onChange = useCallback(
+    (event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+      const { name, value }: { name: string; value: string } = event.target;
+      setInfo({
+        ...info,
+        [name]: value,
+      });
+    },
+    [info]
+  );
   useEffect(() => {
     dispatch(readPost());
     auth.onAuthStateChanged((user) => {
