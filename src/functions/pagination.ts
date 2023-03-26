@@ -1,13 +1,13 @@
 import { post } from '../redux/postSlice';
 
-const limit = 6;
+const LIMIT = 6;
 
 export const pagination = (arr: post[], current: number) => {
-  const currentArr = arr.slice(limit * (current - 1), limit * current);
+  const currentArr = arr.slice(LIMIT * (current - 1), LIMIT * current);
   return currentArr;
 };
 
 export const totalPageNum = (arr: post[]) => {
-  const num = Math.ceil(arr.length / limit);
+  const num = Math.ceil(arr.length / LIMIT);
   return num;
 };
