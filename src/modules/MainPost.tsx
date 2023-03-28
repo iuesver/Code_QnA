@@ -4,9 +4,12 @@ import tw from 'tailwind-styled-components';
 import { post } from '../redux/postSlice';
 import { comment } from '../redux/commentSlice';
 import React, { useEffect, useState } from 'react';
+import { auth } from '../firebase/app';
+import { ToastContainer, toast } from 'react-toastify';
 import { sortPosts } from '../functions/sortPosts';
 import { LoadingContainer } from '../containers/LoadingContainer';
 import { pagination, totalPageNum } from '../functions/pagination';
+import 'react-toastify/dist/ReactToastify.css';
 
 export const MainPost = ({
   posts,
@@ -115,7 +118,19 @@ export const MainPost = ({
               </li>
             </ul>
             <div className="p-2">
-              <Link to={`/create`}>
+              <Link
+                to={auth.currentUser ? `/create` : '/'}
+                onClick={() => {
+                  if (!auth.currentUser) {
+                    const notify = () => {
+                      toast.error('로그인 정보가 없습니다.', {
+                        autoClose: 1500,
+                      });
+                    };
+                    notify();
+                  }
+                }}
+              >
                 <AddBtn>작성하기</AddBtn>
               </Link>
             </div>
@@ -210,6 +225,7 @@ export const MainPost = ({
           )
         )}
       </div>
+      <ToastContainer />
     </Article>
   );
 };

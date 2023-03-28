@@ -38,6 +38,9 @@ export const CreateContainer = () => {
   );
   useEffect(() => {
     dispatch(readPost());
+  }, [dispatch]);
+
+  useEffect(() => {
     auth.onAuthStateChanged((user) => {
       if (user && user.email !== null) {
         setInfo({
@@ -45,11 +48,10 @@ export const CreateContainer = () => {
           ['author']: user.email,
         });
       } else {
-        alert('로그인을 해주세요');
         navigate('/');
       }
     });
-  }, [dispatch]);
+  }, [auth]);
   if (!posts) {
     return <LoadingContainer />;
   }
