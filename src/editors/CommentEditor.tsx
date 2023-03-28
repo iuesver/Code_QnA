@@ -1,13 +1,13 @@
 import { getAuth } from 'firebase/auth';
 import React, { ChangeEvent, useRef, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useAppDispatch } from '../redux/app';
 import { useParams } from 'react-router-dom';
 import { createComment } from '../firebase/function';
 import { RootState, useAppSelector } from '../redux/app';
 import { comment } from '../redux/commentSlice';
 
 export const CommentEditor = React.memo(() => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const [commentInfo, setCommentInfo] = useState('');
   const params = useParams();
   const commentRef = useRef<any>();
