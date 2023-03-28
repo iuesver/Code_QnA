@@ -1,9 +1,5 @@
 import tw from 'tailwind-styled-components';
 
-const Footer = tw.footer`
-footer footer-center p-10 bg-primary text-white
-`;
-
 export const FooterContainer = () => {
   return (
     <Footer>
@@ -15,3 +11,7 @@ export const FooterContainer = () => {
     </Footer>
   );
 };
+
+const Footer = tw.footer`
+footer footer-center p-10 bg-primary text-white
+`;

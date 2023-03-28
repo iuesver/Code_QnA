@@ -9,10 +9,6 @@ import { LoadingContainer } from './LoadingContainer';
 import { post } from '../redux/postSlice';
 import { comment } from '../redux/commentSlice';
 
-const Section = tw.section`
-flex justify-evenly p-4 min-h-screen
-`;
-
 export const MainContainer = () => {
   const posts: post[] = useAppSelector((state: RootState) => {
     return state.post.data;
@@ -37,3 +33,7 @@ export const MainContainer = () => {
     </Section>
   );
 };
+
+const Section = tw.section`
+flex justify-evenly p-4 min-h-screen
+`;

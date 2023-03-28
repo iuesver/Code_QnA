@@ -1,14 +1,6 @@
 import { Link } from 'react-router-dom';
 import tw from 'tailwind-styled-components';
 
-const HeroDiv = tw.div`
-hero min-h-screen
-`;
-
-const HeroContent = tw.div`
-hero-content text-center
-`;
-
 export const NotFoundPage = () => {
   return (
     <HeroDiv>
@@ -31,3 +23,11 @@ export const NotFoundPage = () => {
     </HeroDiv>
   );
 };
+
+const HeroDiv = tw.div`
+hero min-h-screen
+`;
+
+const HeroContent = tw.div`
+hero-content text-center
+`;

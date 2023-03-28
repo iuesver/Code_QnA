@@ -7,20 +7,6 @@ import { EllipsisVerticalIcon } from '@heroicons/react/24/solid';
 import { useAppDispatch } from '../redux/app';
 import { deletePost } from '../firebase/function';
 
-const Article = tw.article`
-p-2
-`;
-const Info = tw.div`
-flex flex-col
-`;
-
-const Title = tw.h1`
-text-3xl font-bold flex-1
-`;
-const SubContent = tw.span`
-text-gray-400
-`;
-
 export const ProductViewer = ({
   posts,
   params,
@@ -75,3 +61,17 @@ export const ProductViewer = ({
     </Article>
   );
 };
+
+const Article = tw.article`
+p-2
+`;
+const Info = tw.div`
+flex flex-col
+`;
+
+const Title = tw.h1`
+text-3xl font-bold flex-1
+`;
+const SubContent = tw.span`
+text-gray-400
+`;

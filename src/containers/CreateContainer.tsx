@@ -9,34 +9,6 @@ import { auth } from '../firebase/app';
 import { findID } from '../functions/findID';
 import { LoadingContainer } from './LoadingContainer';
 
-const Section = tw.section`
-min-h-screen
-`;
-
-const BtnDiv = tw.div`
-flex justify-end p-2
-`;
-
-const AddBtn = tw.label`
-btn btn-accent rounded-full m-2 text-white
-`;
-
-const DeleteBtn = tw.button`
-btn btn-error rounded-full m-2 text-white
-`;
-
-const AddModal = tw.input`
-btn btn-sm btn-accent rounded-full m-0.5 text-white
-`;
-
-const DeleteModal = tw.label`
-btn btn-sm btn-error rounded-full m-0.5 text-white
-`;
-
-const TextInput = tw.input`
-input input-bordered
-`;
-
 export const CreateContainer = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
@@ -155,3 +127,31 @@ export const CreateContainer = () => {
     </Section>
   );
 };
+
+const Section = tw.section`
+min-h-screen
+`;
+
+const BtnDiv = tw.div`
+flex justify-end p-2
+`;
+
+const AddBtn = tw.label`
+btn btn-accent rounded-full m-2 text-white
+`;
+
+const DeleteBtn = tw.button`
+btn btn-error rounded-full m-2 text-white
+`;
+
+const AddModal = tw.input`
+btn btn-sm btn-accent rounded-full m-0.5 text-white
+`;
+
+const DeleteModal = tw.label`
+btn btn-sm btn-error rounded-full m-0.5 text-white
+`;
+
+const TextInput = tw.input`
+input input-bordered
+`;

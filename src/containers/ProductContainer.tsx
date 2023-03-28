@@ -1,36 +1,16 @@
 import { RootState, useAppDispatch, useAppSelector } from '../redux/app';
 import '@toast-ui/editor/dist/toastui-editor-viewer.css';
-import { ChangeEvent, useEffect, useRef, useState } from 'react';
+import { useEffect } from 'react';
 import { readComment, readPost, plusLike } from '../firebase/function';
 import tw from 'tailwind-styled-components';
 import { useParams } from 'react-router-dom';
 import { post } from '../redux/postSlice';
-import { createComment } from '../firebase/function';
 import { ProductViewer } from '../product/ProductViewer';
 import { HandThumbUpIcon } from '@heroicons/react/24/solid';
 import { comment } from '../redux/commentSlice';
 import { getAuth } from 'firebase/auth';
 import { LoadingContainer } from './LoadingContainer';
 import { CommentEditor } from '../editors/CommentEditor';
-
-const Section = tw.section`
-flex flex-col w-3/4 h-full min-h-screen mx-auto my-2 rounded shadow-lg
-`;
-
-const Article = tw.article`
-p-2
-`;
-
-const Info = tw.div`
-flex flex-col
-`;
-
-const Title = tw.h1`
-text-3xl font-bold
-`;
-const SubContent = tw.span`
-text-gray-400
-`;
 
 export const ProductContainer = () => {
   const params = useParams();
@@ -99,3 +79,22 @@ export const ProductContainer = () => {
     </Section>
   );
 };
+
+const Section = tw.section`
+flex flex-col w-3/4 h-full min-h-screen mx-auto my-2 rounded shadow-lg
+`;
+
+const Article = tw.article`
+p-2
+`;
+
+const Info = tw.div`
+flex flex-col
+`;
+
+const Title = tw.h1`
+text-3xl font-bold
+`;
+const SubContent = tw.span`
+text-gray-400
+`;

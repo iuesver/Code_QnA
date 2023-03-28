@@ -1,17 +1,9 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import tw from 'tailwind-styled-components';
-import { LoadingContainer } from '../containers/LoadingContainer';
 import { post } from '../redux/postSlice';
 import sortByDate from '../functions/sortByDate';
 import sortByLike from '../functions/sortByLike';
-const List = tw.ul`
-menu bg-base-100 w-56 p-2 rounded-box shadow-lg
-`;
-
-const Category = tw.li`
-menu-title
-`;
 
 export const SideBar = ({ posts }: { posts: post[] }) => {
   const [sortByLikePosts, setSortByLikePosts] = useState<post[]>([]);
@@ -54,3 +46,11 @@ export const SideBar = ({ posts }: { posts: post[] }) => {
     </aside>
   );
 };
+
+const List = tw.ul`
+menu bg-base-100 w-56 p-2 rounded-box shadow-lg
+`;
+
+const Category = tw.li`
+menu-title
+`;

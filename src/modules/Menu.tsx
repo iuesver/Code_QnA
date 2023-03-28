@@ -1,14 +1,6 @@
 import { Link } from 'react-router-dom';
 import tw from 'tailwind-styled-components';
 
-const List = tw.ul`
-menu bg-base-100 w-56 p-2 rounded-box shadow-lg
-`;
-
-const Category = tw.li`
-menu-title
-`;
-
 export const Menu = () => {
   return (
     <nav className="hidden sm:block">
@@ -41,3 +33,11 @@ export const Menu = () => {
     </nav>
   );
 };
+
+const List = tw.ul`
+menu bg-base-100 w-56 p-2 rounded-box shadow-lg
+`;
+
+const Category = tw.li`
+menu-title
+`;

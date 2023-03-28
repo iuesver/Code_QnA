@@ -5,31 +5,7 @@ import { register, logIn, logOut, logInWithProvider } from '../firebase/auth';
 import tw from 'tailwind-styled-components';
 import { auth } from '../firebase/app';
 import GoogleLogo from '../assets/btn_google_light_normal_ios.svg';
-import GithubLogo from '../assets/github-mark-white.svg';
-
-const Nav = tw.nav`
-navbar bg-primary text-white
-`;
-
-const Title = tw.div`
-flex-1 px-2
-`;
-
-const TextInput = tw.input`
-text-black input input-bordered input-sm input-primary w-full
-`;
-
-const ProviderBox = tw.div`
-flex flex-col items-center py-2
-`;
-
-const ProviderBtn = tw.button`
-flex items-center bg-black w-56 h-12 my-1
-`;
-
-const ProviderDesc = tw.p`
-text-white font-bold flex justify-center pl-2
-`;
+// import GithubLogo from '../assets/github-mark-white.svg';
 
 export const HeaderContainer = () => {
   const [signIn, setSignIn] = useState(false);
@@ -231,3 +207,27 @@ export const HeaderContainer = () => {
     </Nav>
   );
 };
+
+const Nav = tw.nav`
+navbar bg-primary text-white
+`;
+
+const Title = tw.div`
+flex-1 px-2
+`;
+
+const TextInput = tw.input`
+text-black input input-bordered input-sm input-primary w-full
+`;
+
+const ProviderBox = tw.div`
+flex flex-col items-center py-2
+`;
+
+const ProviderBtn = tw.button`
+flex items-center bg-black w-56 h-12 my-1
+`;
+
+const ProviderDesc = tw.p`
+text-white font-bold flex justify-center pl-2
+`;

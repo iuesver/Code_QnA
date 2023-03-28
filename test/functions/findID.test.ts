@@ -56,7 +56,7 @@ describe('The function should return id number', () => {
     { comment: 'test2', commenter: 'unknown', id: 2, group: 1 },
   ];
   it('when arg array is postTestArrayEmptyMiddle', () => {
-    expect(findID(commentTestArrayEmptyMiddle)).toBe(2);
+    expect(findID(postTestArrayEmptyMiddle)).toBe(2);
   });
   it('when arr array is postTestArray', () => {
     expect(findID(postTestArray)).toBe(3);

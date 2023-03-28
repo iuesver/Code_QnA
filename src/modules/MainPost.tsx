@@ -8,22 +8,6 @@ import { sortPosts } from '../functions/sortPosts';
 import { LoadingContainer } from '../containers/LoadingContainer';
 import { pagination, totalPageNum } from '../functions/pagination';
 
-const Article = tw.article`
-flex flex-col justify-between w-full h-full min-h-screen shadow-lg sm:w-1/2
-`;
-
-const BtnDiv = tw.div`
-flex justify-between
-`;
-
-const AddBtn = tw.button`
-btn btn-primary btn-sm rounded-full text-white
-`;
-
-const LikeDiv = tw.div`
-flex flex-col justify-center items-center w-16
-`;
-
 export const MainPost = ({
   posts,
   comments,
@@ -229,3 +213,19 @@ export const MainPost = ({
     </Article>
   );
 };
+
+const Article = tw.article`
+flex flex-col justify-between w-full h-full min-h-screen shadow-lg sm:w-1/2
+`;
+
+const BtnDiv = tw.div`
+flex justify-between
+`;
+
+const AddBtn = tw.button`
+btn btn-primary btn-sm rounded-full text-white
+`;
+
+const LikeDiv = tw.div`
+flex flex-col justify-center items-center w-16
+`;
