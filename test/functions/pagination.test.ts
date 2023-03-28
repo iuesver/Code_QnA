@@ -1,5 +1,5 @@
 import { post } from '../../src/redux/postSlice';
-import testArray from './mock_data';
+import { testArray } from './mock_data';
 
 const LIMIT = 2;
 

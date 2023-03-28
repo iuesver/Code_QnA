@@ -1,6 +1,7 @@
+import { comment } from '../../src/redux/commentSlice';
 import { post } from '../../src/redux/postSlice';
 
-const testArray: post[] = [
+export const testArray: post[] = [
   {
     title: 'test1',
     category: 'ts',
@@ -43,4 +44,15 @@ const testArray: post[] = [
   },
 ];
 
-export default testArray;
+export const testCommentsArray: comment[] = [
+  { comment: 'testComment 1', commenter: 'A', id: 1, group: 1 },
+  { comment: 'testComment 2', commenter: 'A', id: 2, group: 1 },
+  { comment: 'testComment 3', commenter: 'A', id: 3, group: 1 },
+  { comment: 'testComment 4', commenter: 'A', id: 4, group: 1 },
+  { comment: 'testComment 5', commenter: 'B', id: 5, group: 2 },
+  { comment: 'testComment 6', commenter: 'B', id: 6, group: 2 },
+  { comment: 'testComment 7', commenter: 'B', id: 7, group: 2 },
+  { comment: 'testComment 8', commenter: 'C', id: 8, group: 3 },
+  { comment: 'testComment 9', commenter: 'C', id: 9, group: 3 },
+  { comment: 'testComment 10', commenter: 'D', id: 10, group: 4 },
+];

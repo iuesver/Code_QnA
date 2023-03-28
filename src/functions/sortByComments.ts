@@ -24,6 +24,7 @@ export const sortByComments = (posts: post[], comments: comment[]): post[] => {
   arr.sort((a: number[], b: number[]) => {
     return b[1] - a[1];
   });
+
   const result: any[] = [];
   for (let i = 0; i < arr.length; i++) {
     result.push(posts.find((item: post) => item.id === arr[i][0]));

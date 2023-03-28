@@ -1,4 +1,4 @@
-import testArray from './mock_data';
+import { testArray } from './mock_data';
 import sortByDate from '../../src/functions/sortByDate';
 
 test('The function sortByDate should return array sorted by date', () => {
