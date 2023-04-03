@@ -1,4 +1,4 @@
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useSearchParams } from 'react-router-dom';
 import { ChevronUpIcon, ChevronDownIcon } from '@heroicons/react/24/solid';
 import tw from 'tailwind-styled-components';
 import { post } from '../redux/postSlice';
@@ -18,12 +18,9 @@ export const MainPost = ({
   posts: post[];
   comments: comment[];
 }) => {
-  const location = useLocation();
-  let urlParams = new URLSearchParams(location.search).get('category');
+  const [params, setParams] = useSearchParams({ page: '1', keyword: '인기' });
   const [list, setList] = useState<post[]>(posts);
-  const [keyWord, setKeyWord] = useState<string>('인기');
-  const [url, setUrl] = useState<string | null>(urlParams);
-  const [page, setPage] = useState<number>(1);
+
   const commentsNum = comments.reduce(
     (acc: any, cur: comment) => ({
       ...acc,
@@ -31,19 +28,22 @@ export const MainPost = ({
     }),
     {}
   );
+
   useEffect(() => {
-    if (posts && comments && keyWord !== null) {
-      setList(sortPosts([...posts], [...comments], keyWord));
+    if (posts && comments && params.get('keyword') !== null) {
+      setList(
+        sortPosts([...posts], [...comments], params.get('keyword') || '인기')
+      );
     }
-    if (urlParams !== url) {
-      setPage(1);
-    }
-    setUrl(urlParams);
-  }, [urlParams, posts, keyWord]);
+  }, [params, posts]);
+
   if (typeof list === undefined) {
     return <LoadingContainer />;
   }
-  if (url && list.filter((item) => item.category === url).length === 0) {
+  if (
+    params.get('category') &&
+    list.filter((item) => item.category === params.get('category')).length === 0
+  ) {
     return (
       <Article>
         <div className="hero min-h-screen">
@@ -68,8 +68,6 @@ export const MainPost = ({
         <div>
           <input
             type="search"
-            name=""
-            id=""
             className="w-full h-12 py-2 px-6"
             placeholder="무엇이든 검색해보세요!"
             onChange={(event) => {
@@ -80,7 +78,8 @@ export const MainPost = ({
                     item.desc.includes(event.target.value)
                 )
               );
-              setPage(1);
+              params.set('page', '1');
+              setParams(params);
             }}
             onKeyDown={(event: React.KeyboardEvent<HTMLInputElement>) => {
               if (event.key === 'Escape') {
@@ -95,7 +94,8 @@ export const MainPost = ({
               <li
                 className="tab"
                 onClick={() => {
-                  setKeyWord('인기');
+                  params.set('keyword', '인기');
+                  setParams(params);
                 }}
               >
                 인기 순
@@ -103,7 +103,8 @@ export const MainPost = ({
               <li
                 className="tab"
                 onClick={() => {
-                  setKeyWord('최신');
+                  params.set('keyword', '최신');
+                  setParams(params);
                 }}
               >
                 최신 순
@@ -111,7 +112,8 @@ export const MainPost = ({
               <li
                 className="tab"
                 onClick={() => {
-                  setKeyWord('댓글');
+                  params.set('keyword', '댓글');
+                  setParams(params);
                 }}
               >
                 댓글 순
@@ -124,7 +126,7 @@ export const MainPost = ({
                   if (!auth.currentUser) {
                     const notify = () => {
                       toast.error('로그인 정보가 없습니다.', {
-                        autoClose: 1500,
+                        autoClose: 1000,
                       });
                     };
                     notify();
@@ -137,8 +139,8 @@ export const MainPost = ({
           </BtnDiv>
         </div>
         <div>
-          {url === null
-            ? pagination(list, page).map((post: post) => (
+          {params.get('category') === null
+            ? pagination(list, Number(params.get('page'))).map((post: post) => (
                 <div className="px-4" key={post.id}>
                   <div className="flex py-2 border-b-2">
                     <LikeDiv>
@@ -167,8 +169,10 @@ export const MainPost = ({
                 </div>
               ))
             : pagination(
-                list.filter((post: post) => post.category === url),
-                page
+                list.filter(
+                  (post: post) => post.category === params.get('category')
+                ),
+                Number(params.get('page'))
               ).map((post: post) => (
                 <div className="px-4" key={post.id}>
                   <div className="flex py-2 border-b-2">
@@ -203,10 +207,12 @@ export const MainPost = ({
         {Array.from(
           {
             length:
-              url === null
+              params.get('category') === null
                 ? totalPageNum(list)
                 : totalPageNum(
-                    list.filter((post: post) => post.category === url)
+                    list.filter(
+                      (post: post) => post.category === params.get('category')
+                    )
                   ),
           },
           (v, i) => (
@@ -217,7 +223,8 @@ export const MainPost = ({
                 event: React.MouseEvent<HTMLButtonElement, MouseEvent>
               ) => {
                 const target = event.target as HTMLButtonElement;
-                setPage(Number(target.innerHTML));
+                params.set('page', target.innerHTML);
+                setParams(params);
               }}
             >
               {i + 1}
