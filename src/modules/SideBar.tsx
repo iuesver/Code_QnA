@@ -5,7 +5,7 @@ import { post } from '../redux/postSlice';
 import sortByDate from '../functions/sortByDate';
 import sortByLike from '../functions/sortByLike';
 
-export const SideBar = ({ posts }: { posts: post[] }) => {
+const SideBar = ({ posts }: { posts: post[] }) => {
   const [sortByLikePosts, setSortByLikePosts] = useState<post[]>([]);
   const [sortByDatePosts, setSortByDatePosts] = useState<post[]>([]);
   useEffect(() => {
@@ -46,6 +46,8 @@ export const SideBar = ({ posts }: { posts: post[] }) => {
     </aside>
   );
 };
+
+export default SideBar;
 
 const List = tw.ul`
 menu bg-base-100 w-56 p-2 rounded-box shadow-lg

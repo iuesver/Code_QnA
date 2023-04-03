@@ -11,7 +11,7 @@ import { LoadingContainer } from '../containers/LoadingContainer';
 import { pagination, totalPageNum } from '../functions/pagination';
 import 'react-toastify/dist/ReactToastify.css';
 
-export const MainPost = ({
+const MainPost = ({
   posts,
   comments,
 }: {
@@ -236,6 +236,8 @@ export const MainPost = ({
     </Article>
   );
 };
+
+export default MainPost;
 
 const Article = tw.article`
 flex flex-col justify-between w-full h-full min-h-screen shadow-lg sm:w-1/2
