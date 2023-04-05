@@ -9,7 +9,6 @@ import { ProductViewer } from '../product/ProductViewer';
 import { HandThumbUpIcon } from '@heroicons/react/24/solid';
 import { comment } from '../redux/commentSlice';
 import { getAuth } from 'firebase/auth';
-import { LoadingContainer } from './LoadingContainer';
 import { CommentEditor } from '../editors/CommentEditor';
 
 export const ProductContainer = () => {
@@ -34,16 +33,16 @@ export const ProductContainer = () => {
     dispatch(readPost());
     dispatch(readComment());
   }, [dispatch]);
-  if (!posts || !comments || !post) {
-    return <LoadingContainer />;
-  }
+
   return (
     <Section>
       <ProductViewer posts={posts} params={params} user={user} />
       <div className="flex justify-center">
         <button
           onClick={() => {
-            dispatch(plusLike({ post: post }));
+            if (post) {
+              dispatch(plusLike({ post: post }));
+            }
           }}
           className="btn gap-2 bg-white text-black hover:text-white rounded-full"
         >

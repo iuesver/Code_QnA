@@ -7,7 +7,6 @@ import { createPost, readPost } from '../firebase/function';
 import { post } from '../redux/postSlice';
 import { auth } from '../firebase/app';
 import { findID } from '../functions/findID';
-import { LoadingContainer } from './LoadingContainer';
 
 export const CreateContainer = () => {
   const navigate = useNavigate();
@@ -52,9 +51,7 @@ export const CreateContainer = () => {
       }
     });
   }, [auth]);
-  if (!posts) {
-    return <LoadingContainer />;
-  }
+
   return (
     <Section>
       <TextEditor info={info} setFunc={setInfo} />
