@@ -1,7 +1,7 @@
 import tw from 'tailwind-styled-components';
 import { Bars } from 'react-loader-spinner';
 
-export const LoadingContainer = () => {
+const Loading = () => {
   return (
     <Section>
       <Bars
@@ -15,6 +15,8 @@ export const LoadingContainer = () => {
   );
 };
 
+export default Loading;
+
 const Section = tw.section`
-flex justify-center items-center min-h-screen
+min-h-screen flex justify-center items-center
 `;

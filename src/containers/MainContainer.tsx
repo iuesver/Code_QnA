@@ -1,11 +1,10 @@
 import { Menu } from '../modules/Menu';
 import tw from 'tailwind-styled-components';
-import { SideBar } from '../modules/SideBar';
-import { MainPost } from '../modules/MainPost';
+import SideBar from '../modules/SideBar';
+import MainPost from '../modules/MainPost';
 import { readComment, readPost } from '../firebase/function';
 import { useAppSelector, useAppDispatch, RootState } from '../redux/app';
 import { useEffect } from 'react';
-import { LoadingContainer } from './LoadingContainer';
 import { post } from '../redux/postSlice';
 import { comment } from '../redux/commentSlice';
 
@@ -22,9 +21,7 @@ export const MainContainer = () => {
     dispatch(readPost());
     dispatch(readComment());
   }, [dispatch]);
-  if (!posts || !comments) {
-    return <LoadingContainer />;
-  }
+
   return (
     <Section>
       <Menu />

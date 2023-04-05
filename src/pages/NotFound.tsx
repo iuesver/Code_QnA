@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import tw from 'tailwind-styled-components';
 
-export const NotFoundPage = () => {
+export const NotFound = () => {
   return (
     <HeroDiv>
       <HeroContent>

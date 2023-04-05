@@ -7,11 +7,10 @@ import React, { useEffect, useState } from 'react';
 import { auth } from '../firebase/app';
 import { ToastContainer, toast } from 'react-toastify';
 import { sortPosts } from '../functions/sortPosts';
-import { LoadingContainer } from '../containers/LoadingContainer';
 import { pagination, totalPageNum } from '../functions/pagination';
 import 'react-toastify/dist/ReactToastify.css';
 
-export const MainPost = ({
+const MainPost = ({
   posts,
   comments,
 }: {
@@ -36,10 +35,6 @@ export const MainPost = ({
       );
     }
   }, [params, posts]);
-
-  if (typeof list === undefined) {
-    return <LoadingContainer />;
-  }
   if (
     params.get('category') &&
     list.filter((item) => item.category === params.get('category')).length === 0
@@ -236,6 +231,8 @@ export const MainPost = ({
     </Article>
   );
 };
+
+export default MainPost;
 
 const Article = tw.article`
 flex flex-col justify-between w-full h-full min-h-screen shadow-lg sm:w-1/2
